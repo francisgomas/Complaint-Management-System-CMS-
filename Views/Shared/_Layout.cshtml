@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Playfair+Display:700,700i,900&display=swap" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="~/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="~/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="~/css/dark.css" type="text/css" />
+
+	<!-- Home Demo Specific Stylesheet -->
+	<link rel="stylesheet" href="~/css/interior-design.css" type="text/css" />
+
+	<link rel="stylesheet" href="~/css/font-icons.css" type="text/css" />
+	<link rel="stylesheet" href="~/css/animate.css" type="text/css" />
+	<link rel="stylesheet" href="~/css/magnific-popup.css" type="text/css" />
+
+	<link rel="stylesheet" href="~/css/fonts.css" type="text/css" />
+	<link rel="stylesheet" href="~/css/custom.css" type="text/css" />
+
+	<link rel="stylesheet" href="~/css/daterangepicker.css" type="text/css" />
+	<link rel="stylesheet" href="~/css/bs-filestyle.css" type="text/css" />
+</head>
+<body class="stretched">
+    <div id="wrapper" class="clearfix">
+		<header id="header" class="header-size-md" data-sticky-shrink="false">
+			<div id="header-wrap">
+				<div class="container">
+					<div class="header-row justify-content-between">
+						<div id="logo" class="me-lg-0">
+							<a class="standard-logo" asp-controller="Home" asp-action="Index" ><img src="~/images/logo.png" alt="Ministry of Health"></a>
+							<a class="retina-logo" asp-controller="Home" asp-action="Index"><img src="~/images/logo.png" alt="Ministry of Health"></a>
+						</div>
+
+						<div id="primary-menu-trigger">
+							<svg class="svg-trigger" viewBox="0 0 100 100"><path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path d="m 30,50 h 40"></path><path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg>
+						</div>
+
+						<nav class="primary-menu with-arrows">
+							<ul class="menu-container">
+								<li class="menu-item current"><a class="menu-link" asp-controller="Home" asp-action="Index"><div>Home</div></a></li>
+								<li class="menu-item"><a class="menu-link" href="#"><div>Forms</div></a>
+									<ul class="sub-menu-container">
+										<li class="menu-item"><a class="menu-link" asp-controller="Forms" asp-action="Index"><div>Complaint Form</div></a></li>
+									</ul>
+								</li>
+								<li class="menu-item"><a class="menu-link" href="https://www.health.gov.fj/about-us/" target="_blank"><div>About</div></a></li>
+								<li class="menu-item"><a class="menu-link" href="https://www.health.gov.fj/contact-us/" target="_blank"><div>Contact</div></a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<div class="header-wrap-clone"></div>
+		</header>
+
+		@RenderBody()
+
+		<footer id="footer" class="border-0" style="background-color: #F5F5F5;">
+			<div class="line m-0"></div>
+			<div id="copyrights" style="background-color: #FFF">
+				<div class="container clearfix">
+					<div class="w-100 center m-0">
+						<span>Copyrights &copy; 2022 All Rights Reserved by Canvas Inc.</span>
+					</div>
+
+				</div>
+			</div><!-- #copyrights end -->
+		</footer><!-- #footer end -->
+	</div>
+
+	<div id="gotoTop" class="icon-angle-up rounded-circle"></div>
+
+	<script src="~/js/jquery.js"></script>
+	<script src="~/js/plugins.min.js"></script>
+	<script src="~/js/bs-filestyle.js"></script>
+	<script src="~/js/datepicker.js"></script>
+	<script src="~/js/functions.js"></script>
+	<script src="~/js/main.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

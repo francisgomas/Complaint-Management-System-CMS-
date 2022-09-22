@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["MainTitle"] = "Forms";
+    ViewData["Title"] = "Complaint Form";
+}
+
+<partial name="_Heading" />
+
+<section id="content">
+	<div class="content-wrap">
+		<div class="container clearfix">
+			<div class="form-widget">
+				<div class="form-result"></div>
+				<div class="row">
+					<div class="col-12">
+						<form class="row" action="include/form.php" method="post" enctype="multipart/form-data" novalidate="novalidate">
+							<!-- Complainant Details-->
+							<div class="col-12">
+								<h3 class="text-uppercase">Complainant Details </h3>
+							</div>
+							<div class="col-lg-4 form-group">
+								<label>First Name: <span class="required">*</span></label>
+								<input type="text" name="FirstName" id="FirstName" class="form-control required" value="" placeholder="Enter your First Name">
+							</div>
+							<div class="col-lg-4 form-group">
+								<label>Middle Name: </label>
+								<input type="text" name="MiddleName" id="MiddleName" class="form-control" value="" placeholder="Enter your Middle Name">
+							</div>
+							<div class="col-lg-4 form-group">
+								<label>Last Name: <span class="required">*</span></label>
+								<input type="text" name="LastName" id="LastName" class="form-control required" value="" placeholder="Enter your Last Name">
+							</div>
+							<div class="col-lg-6 form-group">
+								<label>Email Address: <span class="required">*</span></label>
+								<input type="email" name="EmailAddress" id="EmailAddress" class="form-control required" value="" placeholder="Enter your Email">
+							</div>
+							<div class="col-lg-6 form-group">
+								<label>Date Of Birth: <span class="required">*</span></label>
+								<input type="text" class="form-control dobpicker required" name="DateofBirth" id="DateofBirth" value="" placeholder="DD/MM/YYYY" data-date-end-date="-18y">
+							</div>
+							<div class="col-lg-6 form-group">
+								<label>Gender: <span class="required">*</span></label>
+								<div class="btn-group d-flex" data-bs-toggle="buttons">
+									<input type="radio" class="btn-check" name="Gender" id="GenderMale" value="Male">
+									<label class="btn btn-outline-secondary nott ls0" for="GenderMale">Male</label>
+
+									<input type="radio" class="btn-check" name="Gender" id="GenderFemale" value="Female">
+									<label class="btn btn-outline-secondary nott ls0" for="GenderFemale">Female</label>
+								</div>
+							</div>
+							<div class="col-lg-6  form-group">
+								<label>Contact Number: <span class="required">*</span></label>
+								<input type="text" name="ContactNumber" id="ContactNumber" class="form-control required" value="" placeholder="Enter your contact number">
+							</div>
+							<div class="col-12 form-group">
+								<label>Residential Address: <span class="required">*</span></label>
+								<input type="text" name="ResidentialAddr" id="ResidentialAddr" class="form-control required" value="" placeholder="Enter your residential address">
+							</div>
+							<div class="col-lg-6 form-group">
+								<label>Postal Address: <span class="required">*</span></label>
+								<input type="text" name="PostalAddr" id="PostalAddr" class="form-control required" value="" placeholder="Enter your postal address">
+							</div>
+							<div class="col-lg-6 form-group">
+								<label>Town/City: <span class="required">*</span></label>
+								<select class="form-select required" name="TownCity" id="TownCity">
+									<option value="">-- Select One --</option>
+								</select>
+							</div>
+
+							<!-- Complaint Details-->
+							<div class="col-12 formHeading">
+								<h3 class="text-uppercase">Complaint Details </h3>
+							</div>
+							<div class="col-lg-4 form-group">
+								<label>Date Of Incident: <span class="required">*</span></label>
+								<input type="text" class="form-control dobpicker required" name="DateofIncident" id="DateofIncident" value="" placeholder="DD/MM/YYYY">
+							</div>
+							<div class="col-lg-4 form-group">
+								<label>Health Facility: <span class="required">*</span></label>
+								<select class="form-select required" name="Facility" id="Facility">
+									<option value="">-- Select One --</option>
+								</select>
+							</div>
+							<div class="col-lg-4 form-group">
+								<label>Your complaint is regarding? <span class="required">*</span></label>
+								<select class="form-select required" name="ComplaintSubject" id="ComplaintSubject">
+									<option value="">-- Select One --</option>
+								</select>
+							</div>
+							<div class="col-lg-6 form-group">
+								<label>Is this the first time you have made this complaint? </label>
+								<div class="btn-group d-flex" data-bs-toggle="buttons">
+									<input type="radio" class="btn-check" name="ComplaintFirstTime" id="ComplaintYes" value="Yes">
+									<label class="btn btn-outline-secondary nott ls0" for="ComplaintYes">Yes</label>
+
+									<input type="radio" class="btn-check" name="ComplaintFirstTime" id="ComplaintNo" value="No">
+									<label class="btn btn-outline-secondary nott ls0" for="ComplaintNo">No</label>
+								</div>
+							</div>
+							<div class="col-lg-6 form-group">
+								<label>Are you lodging the complaint on behalf of someone else ? </label>
+								<div class="btn-group d-flex" data-bs-toggle="buttons">
+									<input type="radio" class="btn-check" name="ComplaintOnBehalf" id="ComplaintYes" value="Yes">
+									<label class="btn btn-outline-secondary nott ls0" for="ComplaintYes">Yes</label>
+
+									<input type="radio" class="btn-check" name="ComplaintOnBehalf" id="ComplaintNo" value="No">
+									<label class="btn btn-outline-secondary nott ls0" for="ComplaintNo">No</label>
+								</div>
+							</div>
+							<div class="col-12 form-group">
+								<label>If NO, please give details of when, where and to whom the complaint was reported to? Other efforts made to bring the issues to the attention of other grievance/redress mechanisms and whether relief, redress or other help was received: </label>
+								<textarea class="form-control required" name="ComplaintReason" id="ComplaintReason" placeholder="Enter reason"></textarea>
+							</div>
+							<div class="col-12 form-group">
+								<label>If YES, how are you related to the complainant? (Family, Friend, Legal Representative. Please provide details below – Name, relation & contact details. If legal representative – Name & contact details of company)</label>
+								<textarea class="form-control required" name="RelatedPerson" id="RelatedPerson" placeholder="Enter relation"></textarea>
+							</div>
+							<div class="col-12 form-group">
+								<label>Complaint Explanation <span class="required">*</span></label>
+								<textarea class="form-control required" name="RelatedPerson" id="RelatedPerson" placeholder="Enter relation"></textarea>
+							</div>
+							<div class="col-12 form-group">
+								<label>Remedy you are seeking from the Ministry</label>
+								<textarea class="form-control required" name="RelatedPerson" id="RelatedPerson" placeholder="Enter relation"></textarea>
+							</div>
+
+							<!-- Evidence Attachment Details -->
+							<div class="col-12 formHeading">
+								<h3 class="text-uppercase">Evidence Attachment Details </h3>
+							</div>
+							<div class="form-group">
+								<label>Upload Evidence:</label>
+								<input type="file" id="jobs-application-resume" name="jobs-application-resume" class="file-loading form-select required" data-show-preview="false" />
+								<small>Supported formats: jpg, jpeg, png, pdf, docx, xls</small>
+							</div>
+
+				
+							<div class="col-12 d-none">
+								<input type="text" id="jobs-application-botcheck" name="jobs-application-botcheck" value="">
+							</div>
+							<div class="col-12">
+								<button type="submit" name="jobs-application-submit" class="btn btn-secondary">Submit Form</button>
+							</div>
+
+							<input type="hidden" name="prefix" value="jobs-application-">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
