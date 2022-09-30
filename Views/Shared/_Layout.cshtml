@@ -41,13 +41,16 @@
 						<nav class="primary-menu with-arrows">
 							<ul class="menu-container">
 								<li class="menu-item current"><a class="menu-link" asp-controller="Home" asp-action="Index"><div>Home</div></a></li>
-								<li class="menu-item"><a class="menu-link" href="#"><div>Forms</div></a>
-									<ul class="sub-menu-container">
-										<li class="menu-item"><a class="menu-link" asp-controller="Forms" asp-action="Index"><div>Complaint Form</div></a></li>
-									</ul>
-								</li>
+								<li class="menu-item"><a class="menu-link" asp-controller="Forms" asp-action="Index"><div>Complaint Form</div></a></li>
 								<li class="menu-item"><a class="menu-link" href="https://www.health.gov.fj/about-us/" target="_blank"><div>About</div></a></li>
 								<li class="menu-item"><a class="menu-link" href="https://www.health.gov.fj/contact-us/" target="_blank"><div>Contact</div></a></li>
+								@if (!User.Identity.IsAuthenticated){
+									<li class="menu-item"><a class="menu-link d-none d-lg-block text-dark" href="~/Identity/Account/Login"><div>Sign In <i class="icon-line-arrow-right"></i></div></a></li>
+								}
+								else
+								{
+									<li class="menu-item"><a class="menu-link" asp-controller="Dashboard" asp-action="Index"><div>Dashboard</div></a></li>
+								}
 							</ul>
 						</nav>
 					</div>

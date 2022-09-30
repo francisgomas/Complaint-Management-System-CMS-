@@ -35,7 +35,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="container pt-lg-6">
 			<div class="row clearfix">
 				<div class="col-md-8">
@@ -122,4 +121,8 @@
 		</div>
 	</div>
 </section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

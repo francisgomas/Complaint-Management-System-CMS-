@@ -13471,7 +13471,7 @@ label.error {
 	font-weight: 400;
 }
 
-label.error { display: none !important; }
+/*label.error { display: none !important; } */
 
 .show-error-msg + label.error { display: block !important; }
 
