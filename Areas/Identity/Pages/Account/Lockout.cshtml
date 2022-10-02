@@ -4,32 +4,47 @@
     ViewData["Title"] = "Locked out";
 }
 
-<main class="main-content  mt-0">
-    <section>
-        <div class="page-header min-vh-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-                    <div class="card card-plain">
-                        <div class="card-header pb-0 text-start">
-                            <p>
-                                <img src="~/images/logo.png" class="auth-logo" />
-                            </p>
-                            <h4 class="text-danger font-weight-bolder">@ViewData["Title"]</h4>
-                            <p class="text-danger">This account has been locked out, please try again later.</p>
-                        </div>
-                    </div>
-                </div>
-                 <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-                <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
-            background-size: cover;">
-                <span class="mask bg-gradient-primary opacity-6"></span>
-                <h4 class="mt-5 text-white font-weight-bolder position-relative">Complaint Management System</h4>
-                <p class="text-white position-relative">Ministry of Health & Medical Services</p>
+<main class="main-content">
+     <!-- Main content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="px-5">
+              <p>
+                  <img src="~/images/logo.png" class="auth-logo" />
+              </p>
+              <h1 class="text-white">Complaint Management System</h1>
+              <p class="text-lead text-white">Ministry of Health & Medical Services</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card bg-secondary border-0 mb-0">
+            <div class="card-body px-lg-5 py-lg-5">
+                 <div class="text-center text-muted mb-4">
+                    <p class="text-danger">@ViewData["Title"]</p>
+                    <p class="mb-0 text-danger">This account has been locked out, please try again later.</p>
                 </div>
             </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <a asp-page="./Login" class="text-light"><small>Sign In</small></a>
             </div>
+            <div class="col-6 text-right">
+              <a asp-controller="Home" asp-action="Index" class="text-light"><small>Back to home page</small></a>
+            </div>
+          </div>
         </div>
-        </div>
-    </section>
+      </div>
+    </div>
+  </div>
 </main>

@@ -5,61 +5,78 @@
     ViewData["Title"] = "Sign in";
 }
 
-<main class="main-content  mt-0">
-    <section>
-        <div class="page-header min-vh-100">
-        <div class="container">
-            <div class="row">
-            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-                <div class="card card-plain">
-                    <div class="card-header pb-0 text-start">
-                        <p>
-                            <img src="~/images/logo.png" class="auth-logo" />
-                        </p>
-                        <h4 class="font-weight-bolder">@ViewData["Title"]</h4>
-                        <p class="mb-0">Enter your email and password to sign in</p>
-                    </div>
-
-                    <div class="card-body">
-                        <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
-                        <form role="form" id="account" method="post">
-                            <div class="mb-3">
-                                <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" placeholder="Email" aria-required="true" aria-label="Email">
-                                <span asp-validation-for="Input.Email" class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="current-password" placeholder="Password" aria-required="true" aria-label="Password">
-                                <span asp-validation-for="Input.Password" class="text-danger"></span>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input asp-for="Input.RememberMe" class="form-check-input" type="checkbox" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
-                            </div>
-                            <div class="text-center">
-                                <button id="login-submit" type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                        <p class="mb-4 text-sm mx-auto">
-                            <a id="forgot-password" asp-page="./ForgotPassword" class="text-primary text-gradient font-weight-bold">Forgot Password?</a> |
-                            <a asp-controller="Home" asp-action="Index" class="text-primary text-gradient font-weight-bold">Back to home page</a>
-                        </p>
-                    </div>
-                </div>
+<main class="main-content">
+     <!-- Main content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="px-5">
+              <p>
+                  <img src="~/images/logo.png" class="auth-logo" />
+              </p>
+              <h1 class="text-white">Complaint Management System</h1>
+              <p class="text-lead text-white">Ministry of Health & Medical Services</p>
             </div>
-            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-                <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
-            background-size: cover;">
-                <span class="mask bg-gradient-primary opacity-6"></span>
-                <h4 class="mt-5 text-white font-weight-bolder position-relative">Complaint Management System</h4>
-                <p class="text-white position-relative">Ministry of Health & Medical Services</p>
-                </div>
-            </div>
-            </div>
+          </div>
         </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card bg-secondary border-0 mb-0">
+            <div class="card-body px-lg-5 py-lg-5">
+                <div class="text-center text-muted mb-4">
+                    <p>@ViewData["Title"]</p>
+                </div>
+              <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-errors"></div>
+              <form role="form" id="account" method="post">
+                <div class="form-group mb-3">
+                  <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                    </div>
+                    <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" placeholder="Email" aria-required="true" aria-label="Email">
+                   
+                  </div>
+                   <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="current-password" placeholder="Password" aria-required="true" aria-label="Password">
+                    
+                  </div>
+                  <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="custom-control custom-control-alternative custom-checkbox">
+                    <input asp-for="Input.RememberMe" class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+                </div>
+                <div class="text-center">
+                  <button id="login-submit" type="submit" class="btn btn-primary my-4">Sign in</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <a id="forgot-password" asp-page="./ForgotPassword" class="text-light"><small>Forgot password?</small></a>
+            </div>
+            <div class="col-6 text-right">
+              <a asp-controller="Home" asp-action="Index" class="text-light"><small>Back to home page</small></a>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 </main>
 
 @section Scripts {
