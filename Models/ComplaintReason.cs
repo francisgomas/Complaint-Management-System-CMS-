@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CMS.Models
 {
@@ -8,8 +9,14 @@ namespace CMS.Models
         [Required]
         [Display(Name = "Complaint Reason")]
         public string Name { get; set; }
-        public int Status { get; set; } = 1;
+        [Required]
+        [Display(Name = "Status")]
+        public int StatusId { get; set; }
+        [ForeignKey(nameof(StatusId))]
+        public virtual Status? Status { get; set; } = null;
+        [Display(Name = "Created At")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [Display(Name = "Updated At")]
         public DateTime LastUpdatedAt { get; set; } = DateTime.Now;
     }
 }

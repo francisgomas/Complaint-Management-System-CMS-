@@ -22,12 +22,14 @@ namespace CMS.Controllers
         // GET: Hospitals
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Hospital.ToListAsync());
+            var applicationDbContext = _context.Hospital.Include(h => h.Status);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Hospitals/Create
         public IActionResult Create()
         {
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name");
             return View();
         }
 
@@ -36,14 +38,17 @@ namespace CMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Status,CreatedAt,LastUpdatedAt")] Hospital hospital)
+        public async Task<IActionResult> Create([Bind("Id,Name,StatusId,CreatedAt,LastUpdatedAt")] Hospital hospital)
         {
             if (ModelState.IsValid)
             {
+                hospital.StatusId = 1;
                 _context.Add(hospital);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", hospital.StatusId);
             return View(hospital);
         }
 
@@ -60,6 +65,8 @@ namespace CMS.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", hospital.StatusId);
             return View(hospital);
         }
 
@@ -68,7 +75,7 @@ namespace CMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Status,CreatedAt,LastUpdatedAt")] Hospital hospital)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StatusId,CreatedAt,LastUpdatedAt")] Hospital hospital)
         {
             if (id != hospital.Id)
             {
@@ -79,6 +86,7 @@ namespace CMS.Controllers
             {
                 try
                 {
+                    hospital.LastUpdatedAt = DateTime.Now;
                     _context.Update(hospital);
                     await _context.SaveChangesAsync();
                 }
@@ -95,44 +103,9 @@ namespace CMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", hospital.StatusId);
             return View(hospital);
-        }
-
-        // GET: Hospitals/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Hospital == null)
-            {
-                return NotFound();
-            }
-
-            var hospital = await _context.Hospital
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (hospital == null)
-            {
-                return NotFound();
-            }
-
-            return View(hospital);
-        }
-
-        // POST: Hospitals/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Hospital == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Hospital'  is null.");
-            }
-            var hospital = await _context.Hospital.FindAsync(id);
-            if (hospital != null)
-            {
-                _context.Hospital.Remove(hospital);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool HospitalExists(int id)

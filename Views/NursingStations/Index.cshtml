@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CMS.Models.NursingStation>
+
+@{
+    ViewData["Title"] = "Nursing Station";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+
+
+<partial name="_Aside" />
+<div class="main-content" id="panel">
+<partial name="_Navbar" />
+
+<div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                    </div>
+                    <div class="col-lg-6 col-5 text-right">
+                        <a asp-controller="NursingStations" asp-action="Create" class="btn btn-sm btn-success btn-round btn-icon">
+                            <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                            <span class="btn-inner--text">Add Item</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <!-- Table -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <h3 class="mb-0">@ViewData["Title"]</h3>
+                </div>
+                <div class="table-responsive py-4">
+                    <table class="table table-flush" id="datatable-basic">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.Status)</th>
+                            <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                            <th>@Html.DisplayNameFor(model => model.LastUpdatedAt)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.Status)</th>
+                            <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                            <th>@Html.DisplayNameFor(model => model.LastUpdatedAt)</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model) {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>
+                                    <span class="badge badge-dot mr-4">
+                                        @if (item.Status.Id == 1)
+                                        {
+                                            <i class="bg-success"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bg-danger"></i>      
+                                        }
+                                        <span class="status">@Html.DisplayFor(modelItem => item.Status.Name)</span>         
+                                    </span>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                                <td>@Html.DisplayFor(modelItem => item.LastUpdatedAt)</td>
+                                <td class="text-right">
+                                  <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" x-placement="bottom-end" style="position: absolute; transform: translate3d(-160px, 31px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
+                                           Edit
+                                        </a>
+                                    </div>
+                                  </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>

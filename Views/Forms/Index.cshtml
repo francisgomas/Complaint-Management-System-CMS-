@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<CMS.Models.ComplaintForm>
+
+@{
     ViewData["MainTitle"] = "Forms";
     ViewData["Title"] = "Complaint Form";
 }
@@ -12,7 +14,7 @@
 				<div class="form-result"></div>
 				<div class="row">
 					<div class="col-12">
-						<form class="row" action="include/form.php" method="post" enctype="multipart/form-data" novalidate="novalidate">
+						<form class="row" action="Index" method="post" enctype="multipart/form-data">
 							<!-- Complainant Details-->
 							<div class="col-12">
 								<h3 class="text-uppercase">Complainant Details </h3>
@@ -29,15 +31,15 @@
 								<label>Last Name: <span class="required">*</span></label>
 								<input type="text" name="LastName" id="LastName" class="form-control required" value="" placeholder="Enter your Last Name">
 							</div>
-							<div class="col-lg-6 form-group">
+							<div class="col-lg-4 form-group">
 								<label>Email Address: <span class="required">*</span></label>
 								<input type="email" name="EmailAddress" id="EmailAddress" class="form-control required" value="" placeholder="Enter your Email">
 							</div>
-							<div class="col-lg-6 form-group">
+							<div class="col-lg-4 form-group">
 								<label>Date Of Birth: <span class="required">*</span></label>
 								<input type="text" class="form-control dobpicker required" name="DateofBirth" id="DateofBirth" value="" placeholder="DD/MM/YYYY" data-date-end-date="-18y">
 							</div>
-							<div class="col-lg-6 form-group">
+							<div class="col-lg-4 form-group">
 								<label>Gender: <span class="required">*</span></label>
 								<div class="btn-group d-flex" data-bs-toggle="buttons">
 									<input type="radio" class="btn-check" name="Gender" id="GenderMale" value="Male">
@@ -47,7 +49,17 @@
 									<label class="btn btn-outline-secondary nott ls0" for="GenderFemale">Female</label>
 								</div>
 							</div>
-							<div class="col-lg-6  form-group">
+							<div class="col-lg-4 form-group">
+								<label>Country: <span class="required">*</span></label>
+								<select class="form-select required" name="Country" id="Country">
+									<option value="">-- Select One --</option>
+								</select>
+							</div>
+							<div class="col-lg-4  form-group">
+								<label>Country Code: <span class="required">*</span></label>
+								<input type="text" name="ContactNumber" id="ContactNumber" class="form-control required" value="" placeholder="Enter your contact number" disabled />
+							</div>
+							<div class="col-lg-4  form-group">
 								<label>Contact Number: <span class="required">*</span></label>
 								<input type="text" name="ContactNumber" id="ContactNumber" class="form-control required" value="" placeholder="Enter your contact number">
 							</div>
@@ -57,13 +69,11 @@
 							</div>
 							<div class="col-lg-6 form-group">
 								<label>Postal Address: <span class="required">*</span></label>
-								<input type="text" name="PostalAddr" id="PostalAddr" class="form-control required" value="" placeholder="Enter your postal address">
+								<input type="text" name="PostalAddr" id="PostalAddr" class="form-control required" value="" placeholder="Enter your postal address" />
 							</div>
 							<div class="col-lg-6 form-group">
 								<label>Town/City: <span class="required">*</span></label>
-								<select class="form-select required" name="TownCity" id="TownCity">
-									<option value="">-- Select One --</option>
-								</select>
+								<input type="text" name="TownCity" id="TownCity" class="form-control required" value="" placeholder="Enter your town/city" />
 							</div>
 
 							<!-- Complaint Details-->

@@ -1,0 +1,52 @@
+﻿@model CMS.Models.HealthFacility
+
+@{
+    ViewData["Title"] = "Health Facility";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<partial name="_Aside" />
+<div class="main-content" id="panel">
+<partial name="_Navbar" />
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-controller="HealthFacilities" asp-action="Index" class="btn btn-sm btn-success btn-round btn-icon">
+                        <span class="btn-inner--icon"><i class="fas fa-arrow-left"></i></span>
+                        <span class="btn-inner--text">Back to List</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+    <div class="card mb-4">
+        <!-- Card body -->
+        <div class="card-body">
+            <!-- Form groups used in grid --> 
+            <div class="row">
+                <div class="col-12">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                         <div class="form-group">
+                            <label asp-for="Name" class="form-control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                         </div>
+                         <div class="form-group">
+                            <input type="submit" value="Create Item" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

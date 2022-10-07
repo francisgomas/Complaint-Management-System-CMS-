@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CMS.Models
 {
@@ -6,10 +7,16 @@ namespace CMS.Models
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Health Facility Name")]
-        public string Name { get; set; }
-        public int Status { get; set; } = 1;
+        [Display(Name = "Health Facility")]
+        public string Name { get; set; } = String.Empty;
+        [Required]
+        [Display(Name = "Status")]
+        public int StatusId { get; set; }
+        [ForeignKey(nameof(StatusId))]
+        public virtual Status? Status { get; set; } = null;
+        [Display(Name = "Created On")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [Display(Name = "Updated On")]
         public DateTime LastUpdatedAt { get;set; } = DateTime.Now;
     }
 }

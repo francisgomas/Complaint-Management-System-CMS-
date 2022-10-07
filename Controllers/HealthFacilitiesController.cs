@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CMS.Data;
 using CMS.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CMS.Controllers
 {
-    [Authorize]
     public class HealthFacilitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,25 +22,32 @@ namespace CMS.Controllers
         // GET: HealthFacilities
         public async Task<IActionResult> Index()
         {
-              return View(await _context.HealthFacility.ToListAsync());
+            var applicationDbContext = _context.HealthFacility.Include(h => h.Status);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: HealthFacilities/Create
         public IActionResult Create()
         {
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name");
             return View();
         }
 
+        // POST: HealthFacilities/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Status,CreatedAt,LastUpdatedAt")] HealthFacility healthFacility)
+        public async Task<IActionResult> Create([Bind("Id,Name,StatusId,CreatedAt,LastUpdatedAt")] HealthFacility healthFacility)
         {
             if (ModelState.IsValid)
             {
+                healthFacility.StatusId = 1;
                 _context.Add(healthFacility);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", healthFacility.StatusId);
             return View(healthFacility);
         }
 
@@ -59,6 +64,7 @@ namespace CMS.Controllers
             {
                 return NotFound();
             }
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", healthFacility.StatusId);
             return View(healthFacility);
         }
 
@@ -67,7 +73,7 @@ namespace CMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Status,CreatedAt,LastUpdatedAt")] HealthFacility healthFacility)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StatusId,CreatedAt,LastUpdatedAt")] HealthFacility healthFacility)
         {
             if (id != healthFacility.Id)
             {
@@ -78,6 +84,7 @@ namespace CMS.Controllers
             {
                 try
                 {
+                    healthFacility.LastUpdatedAt = DateTime.Now;
                     _context.Update(healthFacility);
                     await _context.SaveChangesAsync();
                 }
@@ -94,44 +101,8 @@ namespace CMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", healthFacility.StatusId);
             return View(healthFacility);
-        }
-
-        // GET: HealthFacilities/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.HealthFacility == null)
-            {
-                return NotFound();
-            }
-
-            var healthFacility = await _context.HealthFacility
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (healthFacility == null)
-            {
-                return NotFound();
-            }
-
-            return View(healthFacility);
-        }
-
-        // POST: HealthFacilities/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.HealthFacility == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.HealthFacility'  is null.");
-            }
-            var healthFacility = await _context.HealthFacility.FindAsync(id);
-            if (healthFacility != null)
-            {
-                _context.HealthFacility.Remove(healthFacility);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool HealthFacilityExists(int id)

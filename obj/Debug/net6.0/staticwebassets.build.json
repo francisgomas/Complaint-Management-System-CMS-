@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5km3M/lejC2ZU19H/0i2vW3ibg/OEbqKxPEQ5VJtNvw=",
+  "Hash": "CEKnFaW5e801EUAykJPebRJT595q1eb1TGbPninmq5Q=",
   "Source": "CMS",
   "BasePath": "_content/CMS",
   "Mode": "Default",
@@ -1715,6 +1715,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\preloader.gif"
+    },
+    {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\images\\profile.png",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "images/profile.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\profile.png"
     },
     {
       "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\js\\bs-filestyle.js",

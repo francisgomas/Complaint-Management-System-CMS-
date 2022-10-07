@@ -3,7 +3,7 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header d-flex align-items-center">
-        <a class="navbar-brand" asp-controller="Dashboard" asp-action="Index">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
           <img src="~/images/logo.png" class="navbar-brand-img" alt="...">
         </a>
         <div class="ml-auto">
@@ -48,22 +48,22 @@
               <div class="collapse show" id="navbar-dashboards">
                 <ul class="nav nav-sm flex-column">
                   <li class="nav-item">
-                    <a href="../../pages/dashboards/dashboard.html" class="nav-link">Users</a>
+                    <a asp-controller="User" asp-action="Index" class="nav-link">Users</a>
                   </li>
                   <li class="nav-item">
                     <a asp-controller="HealthFacilities" asp-action="Index" class="nav-link">Health Facility</a>
                   </li>
                    <li class="nav-item">
-                    <a href="../../pages/dashboards/alternative.html" class="nav-link">Complaint Reason</a>
+                    <a asp-controller="ComplaintReasons" asp-action="Index" class="nav-link">Complaint Reason</a>
                   </li>
                    <li class="nav-item">
-                    <a href="../../pages/dashboards/alternative.html" class="nav-link">Hospital</a>
+                    <a asp-controller="Hospitals" asp-action="Index" class="nav-link">Hospital</a>
                   </li>
                    <li class="nav-item">
-                    <a href="../../pages/dashboards/alternative.html" class="nav-link">Health Center</a>
+                    <a asp-controller="HealthCenters" asp-action="Index" class="nav-link">Health Center</a>
                   </li>
                    <li class="nav-item">
-                    <a href="../../pages/dashboards/alternative.html" class="nav-link">Nursing Station</a>
+                    <a asp-controller="NursingStations" asp-action="Index" class="nav-link">Nursing Station</a>
                   </li>
                 </ul>
               </div>
