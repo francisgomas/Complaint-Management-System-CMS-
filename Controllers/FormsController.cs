@@ -14,7 +14,14 @@ namespace CMS.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            //ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", healthCenter.StatusId);
+            ViewData["HealthFacilities"] = new SelectList(_context.HealthFacility.Where(g => g.StatusId == 1), "Id", "Name");
+            ViewData["ComplaintReasons"] = new SelectList(_context.ComplaintReason.Where(g => g.StatusId == 1), "Id", "Name");
+            ViewData["Hospitals"] = new SelectList(_context.Hospital.Where(g => g.StatusId == 1), "Id", "Name");
+            ViewData["HealthCenters"] = new SelectList(_context.HealthCenter.Where(g => g.StatusId == 1), "Id", "Name");
+            ViewData["NursingStations"] = new SelectList(_context.NursingStation.Where(g => g.StatusId == 1), "Id", "Name");
+            ViewData["Countries"] = new SelectList(_context.Country, "Id", "Name");
+            ViewData["Gender"] = new SelectList(_context.Gender, "Id", "Name");
+
             return View();
         }
     }

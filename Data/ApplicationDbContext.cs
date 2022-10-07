@@ -31,6 +31,19 @@ namespace CMS.Data
                 }
             );
 
+            modelBuilder.Entity<Gender>().HasData(
+                new Status
+                {
+                    Id = 1,
+                    Name = "Male",
+                },
+                new Status
+                {
+                    Id = 2,
+                    Name = "Female",
+                }
+            );
+
             modelBuilder.Entity<ApplicationUser>()
                 .Property(e => e.FirstName)
                 .HasMaxLength(250);
@@ -54,5 +67,6 @@ namespace CMS.Data
         public DbSet<Status> Status { get; set; }
         public DbSet<Country> Country { get; set; }
         public DbSet<FormStatus> FormStatus { get; set; }
+        public DbSet<Gender> Gender { get; set; }
     }
 }

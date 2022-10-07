@@ -135,10 +135,8 @@ namespace CMS.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("nvarchar(6)");
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -169,6 +167,8 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("CountryId");
 
+                    b.HasIndex("GenderId");
+
                     b.ToTable("ComplainantDetails");
                 });
 
@@ -184,7 +184,7 @@ namespace CMS.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StatusId")
+                    b.Property<int>("FormStatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("TrackingId")
@@ -198,7 +198,7 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("ComplainantId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("FormStatusId");
 
                     b.ToTable("ComplaintForms");
                 });
@@ -277,6 +277,35 @@ namespace CMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FormStatus");
+                });
+
+            modelBuilder.Entity("CMS.Models.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Gender");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Male"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Female"
+                        });
                 });
 
             modelBuilder.Entity("CMS.Models.HealthCenter", b =>
@@ -414,13 +443,13 @@ namespace CMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 10, 7, 21, 27, 22, 476, DateTimeKind.Local).AddTicks(1901),
+                            CreatedAt = new DateTime(2022, 10, 7, 22, 53, 46, 500, DateTimeKind.Local).AddTicks(7492),
                             Name = "Active"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 10, 7, 21, 27, 22, 476, DateTimeKind.Local).AddTicks(1905),
+                            CreatedAt = new DateTime(2022, 10, 7, 22, 53, 46, 500, DateTimeKind.Local).AddTicks(7494),
                             Name = "Inactive"
                         });
                 });
@@ -581,7 +610,15 @@ namespace CMS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CMS.Models.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Country");
+
+                    b.Navigation("Gender");
                 });
 
             modelBuilder.Entity("CMS.Models.ComplaintForm", b =>
@@ -592,15 +629,15 @@ namespace CMS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CMS.Models.Status", "Status")
+                    b.HasOne("CMS.Models.FormStatus", "FormStatus")
                         .WithMany()
-                        .HasForeignKey("StatusId")
+                        .HasForeignKey("FormStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ComplainantDetails");
 
-                    b.Navigation("Status");
+                    b.Navigation("FormStatus");
                 });
 
             modelBuilder.Entity("CMS.Models.ComplaintReason", b =>

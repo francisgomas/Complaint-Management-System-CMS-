@@ -27,8 +27,9 @@ namespace CMS.Models
         public DateTime DateofBirth { get; set; }
         [Required]
         [Display(Name = "Gender")]
-        [StringLength(6)]
-        public string Gender { get; set; }
+        public int GenderId { get; set; }
+        [ForeignKey(nameof(GenderId))]
+        public virtual Gender? Gender { get; set; } = null;
         [Required]
         [Display(Name = "Country")]
         public int CountryId { get; set; }

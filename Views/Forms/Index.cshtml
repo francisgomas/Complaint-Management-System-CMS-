@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CMS.Models.ComplaintForm>
+﻿@model ComplaintForm
 
 @{
     ViewData["MainTitle"] = "Forms";
@@ -20,60 +20,59 @@
 								<h3 class="text-uppercase">Complainant Details </h3>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>First Name: <span class="required">*</span></label>
-								<input type="text" name="FirstName" id="FirstName" class="form-control required" value="" placeholder="Enter your First Name">
+								<label asp-for="ComplainantDetails.FirstName"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplainantDetails.FirstName" class="form-control required" placeholder="Enter your First Name"/>
+								<span asp-validation-for="ComplainantDetails.FirstName" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>Middle Name: </label>
-								<input type="text" name="MiddleName" id="MiddleName" class="form-control" value="" placeholder="Enter your Middle Name">
+								<label asp-for="ComplainantDetails.MiddleName"></label>
+								<input asp-for="ComplainantDetails.MiddleName" class="form-control" placeholder="Enter your Middle Name"/>
+								<span asp-validation-for="ComplainantDetails.MiddleName" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>Last Name: <span class="required">*</span></label>
-								<input type="text" name="LastName" id="LastName" class="form-control required" value="" placeholder="Enter your Last Name">
+								<label asp-for="ComplainantDetails.LastName"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplainantDetails.LastName" class="form-control required" placeholder="Enter your Last Name"/>
+								<span asp-validation-for="ComplainantDetails.LastName" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>Email Address: <span class="required">*</span></label>
-								<input type="email" name="EmailAddress" id="EmailAddress" class="form-control required" value="" placeholder="Enter your Email">
+								<label asp-for="ComplainantDetails.Email"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplainantDetails.Email" class="form-control required" placeholder="Enter your email address"/>
+								<span asp-validation-for="ComplainantDetails.Email" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>Date Of Birth: <span class="required">*</span></label>
-								<input type="text" class="form-control dobpicker required" name="DateofBirth" id="DateofBirth" value="" placeholder="DD/MM/YYYY" data-date-end-date="-18y">
+								<label asp-for="ComplainantDetails.DateofBirth"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplainantDetails.DateofBirth" class="form-control required" placeholder="DD/MM/YYYY" />
+								<span asp-validation-for="ComplainantDetails.DateofBirth" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>Gender: <span class="required">*</span></label>
-								<div class="btn-group d-flex" data-bs-toggle="buttons">
-									<input type="radio" class="btn-check" name="Gender" id="GenderMale" value="Male">
-									<label class="btn btn-outline-secondary nott ls0" for="GenderMale">Male</label>
-
-									<input type="radio" class="btn-check" name="Gender" id="GenderFemale" value="Female">
-									<label class="btn btn-outline-secondary nott ls0" for="GenderFemale">Female</label>
-								</div>
+								<label asp-for="ComplainantDetails.GenderId"></label><span class="requiredIcon">*</span>
+								<select asp-for="ComplainantDetails.GenderId" class="form-control" asp-items="ViewBag.Gender"></select>
+								<span asp-validation-for="ComplainantDetails.GenderId" class="text-danger"></span>
 							</div>
-							<div class="col-lg-4 form-group">
-								<label>Country: <span class="required">*</span></label>
-								<select class="form-select required" name="Country" id="Country">
-									<option value="">-- Select One --</option>
-								</select>
+							<div class="col-lg-6 form-group">
+								<label asp-for="ComplainantDetails.CountryId"> </label><span class="requiredIcon">*</span>
+								<select asp-for="ComplainantDetails.CountryId" class="form-control" asp-items="ViewBag.Countries"></select>
+								<span asp-validation-for="ComplainantDetails.CountryId" class="text-danger"></span>
 							</div>
-							<div class="col-lg-4  form-group">
-								<label>Country Code: <span class="required">*</span></label>
-								<input type="text" name="ContactNumber" id="ContactNumber" class="form-control required" value="" placeholder="Enter your contact number" disabled />
-							</div>
-							<div class="col-lg-4  form-group">
-								<label>Contact Number: <span class="required">*</span></label>
-								<input type="text" name="ContactNumber" id="ContactNumber" class="form-control required" value="" placeholder="Enter your contact number">
+							<div class="col-lg-6  form-group">
+								<label asp-for="ComplainantDetails.ContactNumber"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplainantDetails.ContactNumber" class="form-control required" placeholder="Enter your contact number"/>
+								<span asp-validation-for="ComplainantDetails.ContactNumber" class="text-danger"></span>
 							</div>
 							<div class="col-12 form-group">
-								<label>Residential Address: <span class="required">*</span></label>
-								<input type="text" name="ResidentialAddr" id="ResidentialAddr" class="form-control required" value="" placeholder="Enter your residential address">
+								<label asp-for="ComplainantDetails.ResidentialAddr"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplainantDetails.ResidentialAddr" class="form-control required" placeholder="Enter your residential address"/>
+								<span asp-validation-for="ComplainantDetails.ResidentialAddr" class="text-danger"></span>
 							</div>
 							<div class="col-lg-6 form-group">
-								<label>Postal Address: <span class="required">*</span></label>
-								<input type="text" name="PostalAddr" id="PostalAddr" class="form-control required" value="" placeholder="Enter your postal address" />
+								<label asp-for="ComplainantDetails.PostalAddr"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplainantDetails.PostalAddr" class="form-control required" placeholder="Enter your postal address"/>
+								<span asp-validation-for="ComplainantDetails.PostalAddr" class="text-danger"></span>
 							</div>
 							<div class="col-lg-6 form-group">
-								<label>Town/City: <span class="required">*</span></label>
-								<input type="text" name="TownCity" id="TownCity" class="form-control required" value="" placeholder="Enter your town/city" />
+								<label asp-for="ComplainantDetails.TownCity"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplainantDetails.TownCity" class="form-control required" placeholder="Enter your town/city"/>
+								<span asp-validation-for="ComplainantDetails.TownCity" class="text-danger"></span>
 							</div>
 
 							<!-- Complaint Details-->

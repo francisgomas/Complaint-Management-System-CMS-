@@ -16,10 +16,10 @@ namespace CMS.Models
         [ForeignKey(nameof(ComplainantId))]
         public virtual ComplainantDetails? ComplainantDetails { get; set; } = null;
         [Required]
-        [Display(Name = "Status")]
-        public int StatusId { get; set; }
-        [ForeignKey(nameof(StatusId))]
-        public virtual Status? Status { get; set; } = null;
+        [Display(Name = "Form Status")]
+        public int FormStatusId { get; set; }
+        [ForeignKey(nameof(FormStatusId))]
+        public virtual FormStatus? FormStatus { get; set; } = null;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
