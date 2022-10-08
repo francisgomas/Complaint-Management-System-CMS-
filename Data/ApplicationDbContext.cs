@@ -55,6 +55,7 @@ namespace CMS.Data
             modelBuilder.Entity<ApplicationUser>()
                 .Property(e => e.StatusId)
                 .HasMaxLength(2);
+
         }
 
 
@@ -68,5 +69,7 @@ namespace CMS.Data
         public DbSet<Country> Country { get; set; }
         public DbSet<FormStatus> FormStatus { get; set; }
         public DbSet<Gender> Gender { get; set; }
+        public DbSet<ComplainantDetails> ComplainantDetails { get; set; }
+        public DbSet<ComplaintDetails> ComplaintDetails { get; set; }
     }
 }

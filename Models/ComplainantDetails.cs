@@ -12,7 +12,7 @@ namespace CMS.Models
         public string FirstName { get; set; }
         [Display(Name = "Middle Name")]
         [StringLength(50)]
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
         [Required]
         [Display(Name = "Last Name")]
         [StringLength(50)]
@@ -46,7 +46,7 @@ namespace CMS.Models
         public string ResidentialAddr { get; set; }
         [Required]
         [StringLength(100)]
-        [Display(Name = "Residential Address")]
+        [Display(Name = "Postal Address")]
         public string PostalAddr { get; set; }
         [Required]
         [StringLength(100)]

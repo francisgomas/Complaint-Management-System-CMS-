@@ -144,7 +144,6 @@ namespace CMS.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -172,6 +171,62 @@ namespace CMS.Data.Migrations
                     b.ToTable("ComplainantDetails");
                 });
 
+            modelBuilder.Entity("CMS.Models.ComplaintDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ComplaintBehalf")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ComplaintBehalfReason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ComplaintExplanation")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ComplaintFirstTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ComplaintFirstTimeReason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("ComplaintReasonId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateofIncident")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("HealthFacilityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HealthFacilityName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Remedy")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplaintReasonId");
+
+                    b.HasIndex("HealthFacilityId");
+
+                    b.ToTable("ComplaintDetails");
+                });
+
             modelBuilder.Entity("CMS.Models.ComplaintForm", b =>
                 {
                     b.Property<Guid>("Id")
@@ -181,6 +236,9 @@ namespace CMS.Data.Migrations
                     b.Property<int>("ComplainantId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ComplaintId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -188,7 +246,6 @@ namespace CMS.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TrackingId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -197,6 +254,8 @@ namespace CMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ComplainantId");
+
+                    b.HasIndex("ComplaintId");
 
                     b.HasIndex("FormStatusId");
 
@@ -443,13 +502,13 @@ namespace CMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 10, 7, 22, 53, 46, 500, DateTimeKind.Local).AddTicks(7492),
+                            CreatedAt = new DateTime(2022, 10, 8, 21, 47, 44, 367, DateTimeKind.Local).AddTicks(2275),
                             Name = "Active"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 10, 7, 22, 53, 46, 500, DateTimeKind.Local).AddTicks(7494),
+                            CreatedAt = new DateTime(2022, 10, 8, 21, 47, 44, 367, DateTimeKind.Local).AddTicks(2277),
                             Name = "Inactive"
                         });
                 });
@@ -621,11 +680,34 @@ namespace CMS.Data.Migrations
                     b.Navigation("Gender");
                 });
 
+            modelBuilder.Entity("CMS.Models.ComplaintDetails", b =>
+                {
+                    b.HasOne("CMS.Models.ComplaintReason", "ComplaintReason")
+                        .WithMany()
+                        .HasForeignKey("ComplaintReasonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CMS.Models.HealthFacility", "HealthFacility")
+                        .WithMany()
+                        .HasForeignKey("HealthFacilityId");
+
+                    b.Navigation("ComplaintReason");
+
+                    b.Navigation("HealthFacility");
+                });
+
             modelBuilder.Entity("CMS.Models.ComplaintForm", b =>
                 {
                     b.HasOne("CMS.Models.ComplainantDetails", "ComplainantDetails")
                         .WithMany()
                         .HasForeignKey("ComplainantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CMS.Models.ComplaintDetails", "ComplaintDetails")
+                        .WithMany()
+                        .HasForeignKey("ComplaintId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -636,6 +718,8 @@ namespace CMS.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ComplainantDetails");
+
+                    b.Navigation("ComplaintDetails");
 
                     b.Navigation("FormStatus");
                 });

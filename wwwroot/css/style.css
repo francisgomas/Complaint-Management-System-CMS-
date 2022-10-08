@@ -95,6 +95,9 @@
 .requiredIcon {
 	color: red;
 }
+#othersHealthFac, #firstTimeReason, #behalfReason {
+	display: none;
+}
 /* ----------------------------------------------------------------
 	Bootstrap Adjustments
 -----------------------------------------------------------------*/

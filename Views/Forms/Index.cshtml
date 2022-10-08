@@ -10,11 +10,20 @@
 <section id="content">
 	<div class="content-wrap">
 		<div class="container clearfix">
-			<div class="form-widget">
-				<div class="form-result"></div>
+
 				<div class="row">
 					<div class="col-12">
-						<form class="row" action="Index" method="post" enctype="multipart/form-data">
+						@{
+							  if(ViewBag.SuccessMessage != null)
+							  {
+									<div class="alert alert-dismissible alert-success">
+										Form submitted successfully! <strong>@ViewBag.SuccessMessage</strong>.
+										<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-hidden="true"></button>
+									</div>
+							  }
+						}
+						<form class="row" asp-action="Index">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 							<!-- Complainant Details-->
 							<div class="col-12">
 								<h3 class="text-uppercase">Complainant Details </h3>
@@ -80,56 +89,66 @@
 								<h3 class="text-uppercase">Complaint Details </h3>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>Date Of Incident: <span class="required">*</span></label>
-								<input type="text" class="form-control dobpicker required" name="DateofIncident" id="DateofIncident" value="" placeholder="DD/MM/YYYY">
+								<label asp-for="ComplaintDetails.DateofIncident"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplaintDetails.DateofIncident" class="form-control required" placeholder="DD/MM/YYYY"/>
+								<span asp-validation-for="ComplaintDetails.DateofIncident" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>Health Facility: <span class="required">*</span></label>
-								<select class="form-select required" name="Facility" id="Facility">
-									<option value="">-- Select One --</option>
-								</select>
+								<label asp-for="ComplaintDetails.HealthFacilityId"></label><span class="requiredIcon">*</span>
+								<select asp-for="ComplaintDetails.HealthFacilityId" class="form-control" asp-items="ViewBag.HealthFacilities" onchange="showOthersInput(this)"></select>
+								<span asp-validation-for="ComplaintDetails.HealthFacilityId" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
-								<label>Your complaint is regarding? <span class="required">*</span></label>
-								<select class="form-select required" name="ComplaintSubject" id="ComplaintSubject">
-									<option value="">-- Select One --</option>
-								</select>
+								<label asp-for="ComplaintDetails.ComplaintReasonId"></label><span class="requiredIcon">*</span>
+								<select asp-for="ComplaintDetails.ComplaintReasonId" class="form-control" asp-items="ViewBag.ComplaintReasons"></select>
+								<span asp-validation-for="ComplaintDetails.ComplaintReasonId" class="text-danger"></span>
+							</div>
+							<div class="col-12 form-group" id="othersHealthFac">
+								<label asp-for="ComplaintDetails.HealthFacilityName"></label><span class="requiredIcon">*</span>
+								<input asp-for="ComplaintDetails.HealthFacilityName" class="form-control required" placeholder="Enter health facility name"/>
+								<span asp-validation-for="ComplaintDetails.HealthFacilityName" class="text-danger"></span>
 							</div>
 							<div class="col-lg-6 form-group">
-								<label>Is this the first time you have made this complaint? </label>
+								<label asp-for="ComplaintDetails.ComplaintFirstTime"></label><span class="requiredIcon">*</span>
 								<div class="btn-group d-flex" data-bs-toggle="buttons">
-									<input type="radio" class="btn-check" name="ComplaintFirstTime" id="ComplaintYes" value="Yes">
+									<input type="radio" class="btn-check" asp-for="ComplaintDetails.ComplaintFirstTime" id="ComplaintYes" value="Yes">
 									<label class="btn btn-outline-secondary nott ls0" for="ComplaintYes">Yes</label>
 
-									<input type="radio" class="btn-check" name="ComplaintFirstTime" id="ComplaintNo" value="No">
+									<input type="radio" class="btn-check" asp-for="ComplaintDetails.ComplaintFirstTime" id="ComplaintNo" value="No">
 									<label class="btn btn-outline-secondary nott ls0" for="ComplaintNo">No</label>
 								</div>
+								<span asp-validation-for="ComplaintDetails.ComplaintFirstTime" class="text-danger"></span>
 							</div>
 							<div class="col-lg-6 form-group">
-								<label>Are you lodging the complaint on behalf of someone else ? </label>
+								<label asp-for="ComplaintDetails.ComplaintBehalf"></label><span class="requiredIcon">*</span>
 								<div class="btn-group d-flex" data-bs-toggle="buttons">
-									<input type="radio" class="btn-check" name="ComplaintOnBehalf" id="ComplaintYes" value="Yes">
-									<label class="btn btn-outline-secondary nott ls0" for="ComplaintYes">Yes</label>
+									<input type="radio" class="btn-check" asp-for="ComplaintDetails.ComplaintBehalf" id="ComplaintBehalfYes" value="Yes">
+									<label class="btn btn-outline-secondary nott ls0" for="ComplaintBehalfYes">Yes</label>
 
-									<input type="radio" class="btn-check" name="ComplaintOnBehalf" id="ComplaintNo" value="No">
-									<label class="btn btn-outline-secondary nott ls0" for="ComplaintNo">No</label>
+									<input type="radio" class="btn-check" asp-for="ComplaintDetails.ComplaintBehalf" id="ComplaintBehalfNo" value="No">
+									<label class="btn btn-outline-secondary nott ls0" for="ComplaintBehalfNo">No</label>
 								</div>
+								<span asp-validation-for="ComplaintDetails.ComplaintBehalf" class="text-danger"></span>
+							</div>
+							<div class="col-12 form-group" id="firstTimeReason">
+								<label asp-for="ComplaintDetails.ComplaintFirstTimeReason"></label><span class="requiredIcon">*</span>
+								<textarea asp-for="ComplaintDetails.ComplaintFirstTimeReason" class="form-control required" placeholder="Enter reason"></textarea>
+								<span asp-validation-for="ComplaintDetails.ComplaintFirstTimeReason" class="text-danger"></span>
+							</div>
+							<div class="col-12 form-group" id="behalfReason">
+								<label asp-for="ComplaintDetails.ComplaintBehalfReason"></label><span class="requiredIcon">*</span>
+								<textarea asp-for="ComplaintDetails.ComplaintBehalfReason" class="form-control required" placeholder="Enter reason"></textarea>
+								<span asp-validation-for="ComplaintDetails.ComplaintBehalfReason" class="text-danger"></span>
 							</div>
 							<div class="col-12 form-group">
-								<label>If NO, please give details of when, where and to whom the complaint was reported to? Other efforts made to bring the issues to the attention of other grievance/redress mechanisms and whether relief, redress or other help was received: </label>
-								<textarea class="form-control required" name="ComplaintReason" id="ComplaintReason" placeholder="Enter reason"></textarea>
+								<label asp-for="ComplaintDetails.ComplaintExplanation"></label><span class="requiredIcon">*</span>
+								<textarea asp-for="ComplaintDetails.ComplaintExplanation" class="form-control required" placeholder="Enter explanation"></textarea>
+								<span asp-validation-for="ComplaintDetails.ComplaintExplanation" class="text-danger"></span>
 							</div>
 							<div class="col-12 form-group">
-								<label>If YES, how are you related to the complainant? (Family, Friend, Legal Representative. Please provide details below – Name, relation & contact details. If legal representative – Name & contact details of company)</label>
-								<textarea class="form-control required" name="RelatedPerson" id="RelatedPerson" placeholder="Enter relation"></textarea>
-							</div>
-							<div class="col-12 form-group">
-								<label>Complaint Explanation <span class="required">*</span></label>
-								<textarea class="form-control required" name="RelatedPerson" id="RelatedPerson" placeholder="Enter relation"></textarea>
-							</div>
-							<div class="col-12 form-group">
-								<label>Remedy you are seeking from the Ministry</label>
-								<textarea class="form-control required" name="RelatedPerson" id="RelatedPerson" placeholder="Enter relation"></textarea>
+								<label asp-for="ComplaintDetails.Remedy"></label>
+								<textarea asp-for="ComplaintDetails.Remedy" class="form-control required" placeholder="Enter remedy"></textarea>
+								<span asp-validation-for="ComplaintDetails.Remedy" class="text-danger"></span>
 							</div>
 
 							<!-- Evidence Attachment Details -->
@@ -138,23 +157,18 @@
 							</div>
 							<div class="form-group">
 								<label>Upload Evidence:</label>
-								<input type="file" id="jobs-application-resume" name="jobs-application-resume" class="file-loading form-select required" data-show-preview="false" />
+								<input type="file" id="jobs-application-resume" name="jobs-application-resume" class="file-loading form-select required" data-show-preview="true" multiple />
 								<small>Supported formats: jpg, jpeg, png, pdf, docx, xls</small>
 							</div>
 
-				
-							<div class="col-12 d-none">
-								<input type="text" id="jobs-application-botcheck" name="jobs-application-botcheck" value="">
-							</div>
 							<div class="col-12">
-								<button type="submit" name="jobs-application-submit" class="btn btn-secondary">Submit Form</button>
+								<input type="submit" class="btn btn-secondary" value="Submit Form"/>
 							</div>
-
-							<input type="hidden" name="prefix" value="jobs-application-">
 						</form>
 					</div>
 				</div>
-			</div>
+
 		</div>
 	</div>
 </section>
+

@@ -1,0 +1,48 @@
+﻿<script src="~/js/jquery.js"></script>
+<script src="~/js/plugins.min.js"></script>
+<script src="~/js/bs-filestyle.js"></script>
+<script src="~/js/datepicker.js"></script>
+<script src="~/js/functions.js"></script>
+<script src="~/js/main.js"></script>
+
+<script type="text/javascript">
+	//Health Facility - COMPLAINT DETAILS
+	function showOthersInput(select){
+	   if(select.value==8){
+		document.getElementById('othersHealthFac').style.display = "block";
+	   } else{
+		document.getElementById('othersHealthFac').style.display = "none";
+	   }
+	} 
+
+	//First time complaint - COMPLAINT DETAILS
+	const first_time_reason = document.getElementById('firstTimeReason');
+	function handleFirstTimeClick() {
+	  if (document.getElementById('ComplaintNo').checked) {
+		first_time_reason.style.display = 'block';
+	  } else {
+		first_time_reason.style.display = 'none';
+	  }
+	}
+
+	const radioButtons = document.querySelectorAll('input[name="ComplaintDetails.ComplaintFirstTime"]');
+	radioButtons.forEach(radio => {
+	  radio.addEventListener('click', handleFirstTimeClick);
+	});
+
+
+	//Behalf complaint - COMPLAINT DETAILS
+	const lodging_complaint = document.getElementById('behalfReason');
+	function handleBehalfClick() {
+	  if (document.getElementById('ComplaintBehalfYes').checked) {
+		lodging_complaint.style.display = 'block';
+	  } else {
+		lodging_complaint.style.display = 'none';
+	  }
+	}
+
+	const radioButtons2 = document.querySelectorAll('input[name="ComplaintDetails.ComplaintBehalf"]');
+	radioButtons2.forEach(radio => {
+	  radio.addEventListener('click', handleBehalfClick);
+	});
+</script>

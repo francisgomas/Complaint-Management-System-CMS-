@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Tracking
+
+@{
 	ViewData["Title"] = "Home Page";
 }
 
@@ -22,15 +24,17 @@
 			<div class="mx-auto" style="max-width: 960px">
 				<div class="heading-block center border-bottom-0">
 					<h2 class="ls2 fw-bold">Track My Application</h2>
-					<span>Competently benchmark backward-compatible technologies vis-a-vis<br>parallel convergence. Rapidiously innovate stand-alone.</span>
+					<span>We provide a quicker & convenient method of submitting online complaints promoting improved transparency and quicker responses. </span>
 				</div>
 				<div class="subscribe-widget" data-loader="button">
 					<div class="widget-subscribe-form-result"></div>
-					<form id="widget-subscribe-form" action="" method="post" class="mb-0" data-animate="fadeInUp">
+					<form id="widget-subscribe-form" asp-action="TrackApp" class="mb-0" data-animate="fadeInUp">
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 						<div class="input-group mx-auto">
-							<input type="text" id="widget-subscribe-form-email" name="widget-subscribe-form-email" class="form-control form-control-lg not-dark" placeholder="Enter application tracking number" style="border: 0; box-shadow: none; overflow: hidden;">
-							<button href="#" class="button fw-normal" type="submit" style="border-radius: 3px;">Submit</button>
+							<input type="text" asp-for="TrackingId" class="form-control form-control-lg not-dark" placeholder="Enter application tracking number" style="border: 0; box-shadow: none; overflow: hidden;">
+							<input type="submit" class="button fw-normal" value="Submit" style="border-radius: 3px;" />
 						</div>
+						<span asp-validation-for="TrackingId" class="text-danger"></span>
 					</form>
 				</div>
 			</div>
@@ -121,8 +125,4 @@
 		</div>
 	</div>
 </section>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
 

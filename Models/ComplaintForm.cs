@@ -7,17 +7,21 @@ namespace CMS.Models
     {
         [Required]
         public Guid Id { get; set; }
-        [Required]
         [Display(Name = "Tracking Number")]
-        public string TrackingId { get; set; }
+        public string? TrackingId { get; set; } = string.Empty;
         [Required]
         [Display(Name = "Complainant Details")]
         public int ComplainantId { get; set; }
         [ForeignKey(nameof(ComplainantId))]
         public virtual ComplainantDetails? ComplainantDetails { get; set; } = null;
         [Required]
+        [Display(Name = "Complaint Details")]
+        public int ComplaintId { get; set; }
+        [ForeignKey(nameof(ComplaintId))]
+        public virtual ComplaintDetails? ComplaintDetails { get; set; } = null;
+        [Required]
         [Display(Name = "Form Status")]
-        public int FormStatusId { get; set; }
+        public int FormStatusId { get; set; } = 1;
         [ForeignKey(nameof(FormStatusId))]
         public virtual FormStatus? FormStatus { get; set; } = null;
         public DateTime CreatedAt { get; set; } = DateTime.Now;

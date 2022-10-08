@@ -76,12 +76,7 @@
 
 	<div id="gotoTop" class="icon-angle-up rounded-circle"></div>
 
-	<script src="~/js/jquery.js"></script>
-	<script src="~/js/plugins.min.js"></script>
-	<script src="~/js/bs-filestyle.js"></script>
-	<script src="~/js/datepicker.js"></script>
-	<script src="~/js/functions.js"></script>
-	<script src="~/js/main.js"></script>
+	@{await Html.RenderPartialAsync("_FormsScriptsPartial");}
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
