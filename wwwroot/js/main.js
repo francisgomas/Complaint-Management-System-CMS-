@@ -4,7 +4,7 @@
 	});
 
 	$("#jobs-application-resume").fileinput({
-		required: true,
+		required: false,
 		browseClass: "btn btn-secondary",
 		browseIcon: "",
 		removeClass: "btn btn-danger",

@@ -4,6 +4,7 @@
 <script src="~/js/datepicker.js"></script>
 <script src="~/js/functions.js"></script>
 <script src="~/js/main.js"></script>
+<script src="~/js/sweetalert2.min.js"></script>
 
 <script type="text/javascript">
 	//Health Facility - COMPLAINT DETAILS
@@ -45,4 +46,40 @@
 	radioButtons2.forEach(radio => {
 	  radio.addEventListener('click', handleBehalfClick);
 	});
+
+	//Track my application
+	function submitTrackApp(){
+        var url = $("#trackAppForm").attr("action");
+		var data = $("#trackAppForm").serialize(); 
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (response) {
+                if (response.result == true) {
+					Swal.fire({
+					  icon: 'success',
+					  title: 'Success!',
+					  text: response.message,
+					})
+                }
+                else {
+					Swal.fire({
+					  icon: 'warning',
+					  title: 'Something went wrong!',
+					  text: response.message,
+					})
+				}
+            },
+            error: function () {
+				Swal.fire({
+					icon: 'error',
+					title: 'Error!',
+					text: 'Failed to receive the data',
+				})
+			}
+        });
+	}
 </script>

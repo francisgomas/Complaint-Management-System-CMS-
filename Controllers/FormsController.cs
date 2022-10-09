@@ -1,5 +1,6 @@
 ﻿using CMS.Data;
 using CMS.Models;
+using CMS.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +10,14 @@ namespace CMS.Controllers
     public class FormsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public FormsController(ApplicationDbContext context)
+        private IEmailService _emailService = null;
+        public FormsController(ApplicationDbContext context, IEmailService emailService)
         {
+            _emailService = emailService;
             _context = context; 
         }
 
-        private void GetAllData()
+        private async Task GetAllData()
         {
             ViewData["HealthFacilities"] = new SelectList(_context.HealthFacility.Where(g => g.StatusId == 1), "Id", "Name");
             ViewData["ComplaintReasons"] = new SelectList(_context.ComplaintReason.Where(g => g.StatusId == 1), "Id", "Name");
@@ -36,7 +39,7 @@ namespace CMS.Controllers
 
         public async Task<IActionResult> Index()
         {
-            GetAllData();
+            await GetAllData();
             return View();
         }
 
@@ -44,7 +47,7 @@ namespace CMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ComplaintForm complaintForm)
         {
-            GetAllData();
+            await GetAllData();
             if (ModelState.IsValid)
             {
                 complaintForm.TrackingId = GenerateTrackingId();
@@ -52,7 +55,18 @@ namespace CMS.Controllers
                 await _context.SaveChangesAsync();
 
                 ViewBag.SuccessMessage = "Tracking Number: " + complaintForm.TrackingId;
+
+                //send email
+                var emailDetails = new EmailData();
+                emailDetails.EmailToId = complaintForm.ComplainantDetails.Email;
+                emailDetails.EmailToName = complaintForm.ComplainantDetails.FirstName + " " + complaintForm.ComplainantDetails.LastName;
+                emailDetails.EmailSubject = "Confirmation Email - Ministry of Health & Medical Services";
+                emailDetails.EmailBody = "Thank you for using our CMS (Complaint Management System)! We have received your submission " +
+                    "and it will be processed shortly. Your application tracking number is " + complaintForm.TrackingId + ". Please use the " +
+                    "<strong>Track my application</strong> feature to determine the progress of your complaint!";
+
                 ModelState.Clear();
+                _emailService.SendEmail(emailDetails);
                 return View();
             }
 
@@ -66,23 +80,32 @@ namespace CMS.Controllers
             if (ModelState.IsValid)
             {
                 ComplaintForm form = new ComplaintForm();
-                form = await _context.ComplaintForms.FirstOrDefaultAsync(a => a.TrackingId == applicationTracking.TrackingId);
+                form = await _context.ComplaintForms
+                    .Include(c => c.FormStatus)
+                    .FirstOrDefaultAsync(a => a.TrackingId == applicationTracking.TrackingId);
                 if (form != null)
                 {
-                    return Ok("Form is currently in " + form.FormStatus.FormStatusName + ". Last update on " + form.UpdatedAt);
+                    return Json(new
+                    {
+                        message = "Complaint Form is in " + form.FormStatus.FormStatusName + " status. Last updated on " + form.UpdatedAt,
+                        result = true
+                    });
                 }
                 else
                 {
-                    return NotFound();
+                    return Json(new
+                    {
+                        message = "Incorrect tracking number entered!",
+                        result = false
+                    });
                 }
             }
-            else
+
+            return Json(new
             {
-                return BadRequest("Enter required fields");
-            }
-            
+                message = "Please enter tracking number",
+                result = false
+            });
         }
     }
-
-    
 }

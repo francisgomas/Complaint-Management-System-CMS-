@@ -44,7 +44,7 @@ body.side-panel-open #side-panel {
 }
 
 /* ----- Hero Widget ----- */
-#widget-subscribe-form {
+#widget-subscribe-form, #trackAppForm {
 	display: block;
 	padding: 8px;
 	background-color: #FFF;
@@ -54,7 +54,9 @@ body.side-panel-open #side-panel {
 	transition: box-shadow .4s linear;
 }
 
-#widget-subscribe-form:hover { box-shadow: 0 0 42px 4px rgba(0,0,0,.3) !important; }
+	#widget-subscribe-form:hover, #trackAppForm:hover {
+		box-shadow: 0 0 42px 4px rgba(0,0,0,.3) !important;
+	}
 
 .input-lg { height: 50px; }
 

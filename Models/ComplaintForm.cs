@@ -24,9 +24,8 @@ namespace CMS.Models
         public int FormStatusId { get; set; } = 1;
         [ForeignKey(nameof(FormStatusId))]
         public virtual FormStatus? FormStatus { get; set; } = null;
+        public string? FileName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
-
     }
 }

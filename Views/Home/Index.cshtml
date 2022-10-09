@@ -26,17 +26,14 @@
 					<h2 class="ls2 fw-bold">Track My Application</h2>
 					<span>We provide a quicker & convenient method of submitting online complaints promoting improved transparency and quicker responses. </span>
 				</div>
-				<div class="subscribe-widget" data-loader="button">
-					<div class="widget-subscribe-form-result"></div>
-					<form id="widget-subscribe-form" asp-action="TrackApp" class="mb-0" data-animate="fadeInUp">
-						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-						<div class="input-group mx-auto">
-							<input type="text" asp-for="TrackingId" class="form-control form-control-lg not-dark" placeholder="Enter application tracking number" style="border: 0; box-shadow: none; overflow: hidden;">
-							<input type="submit" class="button fw-normal" value="Submit" style="border-radius: 3px;" />
-						</div>
-						<span asp-validation-for="TrackingId" class="text-danger"></span>
-					</form>
-				</div>
+				<form id="trackAppForm" asp-controller="Forms" asp-action="TrackApp" class="mb-0" data-animate="fadeInUp">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="input-group mx-auto">
+						<input type="text" asp-for="TrackingId" class="form-control form-control-lg not-dark" placeholder="Enter application tracking number" style="border: 0; box-shadow: none; overflow: hidden;" />
+						<input type="button" class="button fw-normal" value="Submit" onclick="submitTrackApp()" style="border-radius: 3px;" />
+					</div>
+					<span asp-validation-for="TrackingId" class="text-danger"></span>
+				</form>
 			</div>
 		</div>
 		<div class="container pt-lg-6">

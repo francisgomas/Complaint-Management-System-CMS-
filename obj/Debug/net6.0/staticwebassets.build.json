@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "CEKnFaW5e801EUAykJPebRJT595q1eb1TGbPninmq5Q=",
+  "Hash": "mnw74KLSWsR5kpuf+TBn/eV5szoArroKAnFNw+XUgbY=",
   "Source": "CMS",
   "BasePath": "_content/CMS",
   "Mode": "Default",
@@ -1530,6 +1530,23 @@
       "OriginalItemSpec": "wwwroot\\css\\style.css"
     },
     {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\css\\sweetalert2.min.css",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "css/sweetalert2.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\sweetalert2.min.css"
+    },
+    {
       "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\favicon.ico",
       "SourceId": "CMS",
       "SourceType": "Discovered",
@@ -1868,6 +1885,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\plugins.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\js\\sweetalert2.min.js",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "js/sweetalert2.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\sweetalert2.min.js"
     },
     {
       "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\panel\\argon.css",

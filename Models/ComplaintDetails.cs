@@ -39,8 +39,7 @@ namespace CMS.Models
         [StringLength(1000)]
         public string ComplaintExplanation { get; set; } = String.Empty;
         [Display(Name = "Remedy you are seeking from the ministry")]
-        [Required]
         [StringLength(1000)]
-        public string Remedy { get; set; } = String.Empty;
+        public string? Remedy { get; set; } = String.Empty;
     }
 }

@@ -214,7 +214,6 @@ namespace CMS.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Remedy")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -241,6 +240,9 @@ namespace CMS.Data.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FormStatusId")
                         .HasColumnType("int");
@@ -502,13 +504,13 @@ namespace CMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 10, 8, 21, 47, 44, 367, DateTimeKind.Local).AddTicks(2275),
+                            CreatedAt = new DateTime(2022, 10, 9, 23, 5, 8, 894, DateTimeKind.Local).AddTicks(9894),
                             Name = "Active"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 10, 8, 21, 47, 44, 367, DateTimeKind.Local).AddTicks(2277),
+                            CreatedAt = new DateTime(2022, 10, 9, 23, 5, 8, 894, DateTimeKind.Local).AddTicks(9896),
                             Name = "Inactive"
                         });
                 });

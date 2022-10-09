@@ -271,3 +271,6 @@ C:\Users\Gomas\Documents\Projects\NET_Core\CMS\bin\Debug\net6.0\runtimes\unix\li
 C:\Users\Gomas\Documents\Projects\NET_Core\CMS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Gomas\Documents\Projects\NET_Core\CMS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Gomas\Documents\Projects\NET_Core\CMS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\Gomas\Documents\Projects\NET_Core\CMS\bin\Debug\net6.0\MailKit.dll
+C:\Users\Gomas\Documents\Projects\NET_Core\CMS\bin\Debug\net6.0\MimeKit.dll
+C:\Users\Gomas\Documents\Projects\NET_Core\CMS\bin\Debug\net6.0\BouncyCastle.Crypto.dll
