@@ -1,79 +1,93 @@
 ﻿@model IEnumerable<CMS.Models.ComplaintForm>
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Complaint Forms";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<!DOCTYPE html>
+<partial name="_Aside" />
+<div class="main-content" id="panel">
+<partial name="_Navbar" />
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplainantDetails)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintDetails)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FormStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FileName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrackingId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ComplainantDetails.ContactNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ComplaintDetails.ComplaintBehalf)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FormStatus.FormStatusName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-</body>
-</html>
+<div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-12">
+                        <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <!-- Table -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <h3 class="mb-0">@ViewData["Title"]</h3>
+                </div>
+                <div class="table-responsive py-4">
+                    <table class="table table-flush" id="datatable-basic">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.TrackingId)</th>
+                            <th>@Html.DisplayNameFor(model => model.ComplainantDetails.FirstName)</th>
+                            <th>@Html.DisplayNameFor(model => model.ComplainantDetails.LastName)</th>
+                            <th>@Html.DisplayNameFor(model => model.ComplainantDetails.Email)</th>
+                            <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.TrackingId)</th>
+                            <th>@Html.DisplayNameFor(model => model.ComplainantDetails.FirstName)</th>
+                            <th>@Html.DisplayNameFor(model => model.ComplainantDetails.LastName)</th>
+                            <th>@Html.DisplayNameFor(model => model.ComplainantDetails.Email)</th>
+                            <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model) {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.TrackingId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ComplainantDetails.FirstName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ComplainantDetails.LastName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ComplainantDetails.Email)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                                <td class="text-right">
+                                  <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" x-placement="bottom-end" style="position: absolute; transform: translate3d(-160px, 31px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">
+                                           View details
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
+                                           Edit
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
+                                           Mark as archived
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
+                                           Mark as deleted
+                                        </a>
+                                    </div>
+                                  </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

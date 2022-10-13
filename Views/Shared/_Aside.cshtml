@@ -40,36 +40,36 @@
                 <span class="nav-link-text">Reports</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="#navbar-dashboards" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
-                <i class="ni ni-shop text-primary"></i>
-                <span class="nav-link-text">Administration</span>
-              </a>
-              <div class="collapse show" id="navbar-dashboards">
-                <ul class="nav nav-sm flex-column">
-                  <li class="nav-item">
-                    <a asp-controller="User" asp-action="Index" class="nav-link">Users</a>
-                  </li>
-                  <li class="nav-item">
-                    <a asp-controller="HealthFacilities" asp-action="Index" class="nav-link">Health Facility</a>
-                  </li>
-                   <li class="nav-item">
-                    <a asp-controller="ComplaintReasons" asp-action="Index" class="nav-link">Complaint Reason</a>
-                  </li>
-                   <li class="nav-item">
-                    <a asp-controller="Hospitals" asp-action="Index" class="nav-link">Hospital</a>
-                  </li>
-                   <li class="nav-item">
-                    <a asp-controller="HealthCenters" asp-action="Index" class="nav-link">Health Center</a>
-                  </li>
-                   <li class="nav-item">
-                    <a asp-controller="NursingStations" asp-action="Index" class="nav-link">Nursing Station</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          
-           
+            @if(User.IsInRole("Systems Administrator")){
+                <li class="nav-item">
+                    <a class="nav-link active" href="#navbar-dashboards" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards">
+                    <i class="ni ni-shop text-primary"></i>
+                    <span class="nav-link-text">Administration</span>
+                    </a>
+                    <div class="collapse show" id="navbar-dashboards">
+                    <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                        <a asp-controller="User" asp-action="Index" class="nav-link">Users</a>
+                        </li>
+                        <li class="nav-item">
+                        <a asp-controller="HealthFacilities" asp-action="Index" class="nav-link">Health Facility</a>
+                        </li>
+                        <li class="nav-item">
+                        <a asp-controller="ComplaintReasons" asp-action="Index" class="nav-link">Complaint Reason</a>
+                        </li>
+                        <li class="nav-item">
+                        <a asp-controller="Hospitals" asp-action="Index" class="nav-link">Hospital</a>
+                        </li>
+                        <li class="nav-item">
+                        <a asp-controller="HealthCenters" asp-action="Index" class="nav-link">Health Center</a>
+                        </li>
+                        <li class="nav-item">
+                        <a asp-controller="NursingStations" asp-action="Index" class="nav-link">Nursing Station</a>
+                        </li>
+                    </ul>
+                    </div>
+                </li>
+            }
            
           </ul>
         </div>

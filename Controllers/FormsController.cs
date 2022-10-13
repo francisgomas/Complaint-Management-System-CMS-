@@ -36,7 +36,6 @@ namespace CMS.Controllers
                 s = String.Concat(s, random.Next(10).ToString());
             return s;
         }
-
         public async Task<IActionResult> Index()
         {
             await GetAllData();
@@ -66,7 +65,7 @@ namespace CMS.Controllers
                     "<strong>Track my application</strong> feature to determine the progress of your complaint!";
 
                 ModelState.Clear();
-                _emailService.SendEmail(emailDetails);
+                await _emailService.SendEmail(emailDetails);
                 return View();
             }
 

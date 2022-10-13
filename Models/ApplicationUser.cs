@@ -16,9 +16,17 @@ namespace CMS.Models
         [DataType(DataType.Text)]
         public string LastName { get; set; }
         [Required]
+        [Display(Name = "Status")]
         public int StatusId { get; set; } = 1;
         [ForeignKey(nameof(StatusId))]
         public virtual Status? Status { get; set; } = null;
-        public byte[] ProfilePicture { get; set; }
+        [Required]
+        [Display(Name = "Role Name")]
+        public string RoleId { get; set; }
+        [Display(Name = "Created On")]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [Display(Name = "Updated On")]
+        public DateTime LastUpdatedAt { get; set; } = DateTime.Now;
+
     }
 }

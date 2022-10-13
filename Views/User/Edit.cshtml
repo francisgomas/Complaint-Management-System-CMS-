@@ -1,0 +1,87 @@
+﻿@model CMS.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Edit User";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<partial name="_Aside" />
+<div class="main-content" id="panel">
+<partial name="_Navbar" />
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-controller="User" asp-action="Index" class="btn btn-sm btn-success btn-round btn-icon">
+                        <span class="btn-inner--icon"><i class="fas fa-arrow-left"></i></span>
+                        <span class="btn-inner--text">Back to List</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CreatedAt" />
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                 <div class="form-group">
+                                    <label asp-for="FirstName" class="form-control-label"></label>
+                                    <input asp-for="FirstName" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                 </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                 <div class="form-group">
+                                    <label asp-for="LastName" class="form-control-label"></label>
+                                    <input asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12">
+                                 <div class="form-group">
+                                    <label asp-for="Email" class="form-control-label"></label>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                 </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                 <div class="form-group">
+                                    <label asp-for="StatusId" class="form-control-label"></label>
+                                    <select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
+                                    <span asp-validation-for="StatusId" class="text-danger"></span>
+                                 </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                 <div class="form-group">
+                                    <label asp-for="RoleId" class="form-control-label"></label>
+                                    <select asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
+                                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Update User" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
