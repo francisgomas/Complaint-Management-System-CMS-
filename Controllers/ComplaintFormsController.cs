@@ -19,12 +19,55 @@ namespace CMS.Controllers
             _context = context;
         }
 
-        // GET: ComplaintForms
-        public async Task<IActionResult> Index()
+        private Task setTitle(int id = 0)
         {
-            var applicationDbContext = _context.ComplaintForms.Include(c => c.ComplainantDetails).Include(c => c.ComplaintDetails).Include(c => c.FormStatus);
+            ViewData["Title"] = "Complaint Forms";
+            var formStatus = _context.FormStatus.Where(a => a.Id == id).FirstOrDefault();
+            if (formStatus != null)
+            {
+                ViewData["Title"] += " - " + formStatus.FormStatusName;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        // GET: ComplaintForms
+        public async Task<IActionResult> Index(int id)
+        {
+            var applicationDbContext = _context.ComplaintForms.Include(c => c.ComplainantDetails)
+                .Include(c => c.ComplaintDetails)
+                .Include(c => c.FormStatus)
+                .Where(c => c.FormStatusId == id)
+                .OrderByDescending(c => c.UpdatedAt);
+
+            await setTitle(id);
             return View(await applicationDbContext.ToListAsync());
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeStatus(Guid complaintformid, int statusid)
+        {
+            var form = await _context.ComplaintForms
+                .Include(c => c.ComplainantDetails)
+                .Include(c => c.ComplaintDetails)
+                .Include(c => c.FormStatus)
+                .FirstOrDefaultAsync(m => m.Id == complaintformid);
+
+            var statuschk = await _context.FormStatus.FirstOrDefaultAsync(c => c.Id == statusid);
+
+            if (form != null && statuschk != null)
+            {
+                var tempstat = form.FormStatusId;
+                form.FormStatusId = statuschk.Id;
+                form.UpdatedAt = DateTime.Now;
+                _context.Update(form);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index), new { id = tempstat });
+            }
+            return NotFound();
+        }
+
 
         // GET: ComplaintForms/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -36,9 +79,14 @@ namespace CMS.Controllers
 
             var complaintForm = await _context.ComplaintForms
                 .Include(c => c.ComplainantDetails)
+                .Include(c => c.ComplainantDetails.Gender)
+                .Include(c => c.ComplainantDetails.Country)
                 .Include(c => c.ComplaintDetails)
+                .Include(c => c.ComplaintDetails.HealthFacility)
+                .Include(c => c.ComplaintDetails.ComplaintReason)
                 .Include(c => c.FormStatus)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (complaintForm == null)
             {
                 return NotFound();
@@ -131,46 +179,6 @@ namespace CMS.Controllers
             ViewData["ComplaintId"] = new SelectList(_context.ComplaintDetails, "Id", "ComplaintBehalf", complaintForm.ComplaintId);
             ViewData["FormStatusId"] = new SelectList(_context.FormStatus, "Id", "FormStatusName", complaintForm.FormStatusId);
             return View(complaintForm);
-        }
-
-        // GET: ComplaintForms/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null || _context.ComplaintForms == null)
-            {
-                return NotFound();
-            }
-
-            var complaintForm = await _context.ComplaintForms
-                .Include(c => c.ComplainantDetails)
-                .Include(c => c.ComplaintDetails)
-                .Include(c => c.FormStatus)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (complaintForm == null)
-            {
-                return NotFound();
-            }
-
-            return View(complaintForm);
-        }
-
-        // POST: ComplaintForms/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            if (_context.ComplaintForms == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.ComplaintForms'  is null.");
-            }
-            var complaintForm = await _context.ComplaintForms.FindAsync(id);
-            if (complaintForm != null)
-            {
-                _context.ComplaintForms.Remove(complaintForm);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool ComplaintFormExists(Guid id)

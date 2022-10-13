@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<CMS.Models.ComplaintForm>
 
 @{
-    ViewData["Title"] = "Complaint Forms";
     Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
@@ -14,7 +13,9 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-12">
-                        <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                        <h6 class="h2 text-white d-inline-block mb-0">
+                            @ViewData["Title"]
+                        </h6>
                     </div>
                 </div>
             </div>
@@ -39,6 +40,7 @@
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.LastName)</th>
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.Email)</th>
                             <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                            <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -49,6 +51,7 @@
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.LastName)</th>
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.Email)</th>
                             <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                            <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -60,6 +63,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.ComplainantDetails.LastName)</td>
                                 <td>@Html.DisplayFor(modelItem => item.ComplainantDetails.Email)</td>
                                 <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                                <td>@Html.DisplayFor(modelItem => item.UpdatedAt)</td>
                                 <td class="text-right">
                                   <div class="dropdown">
                                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,14 +74,32 @@
                                            View details
                                         </a>
                                         <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
-                                           Edit
+                                           Edit / Assign
                                         </a>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
-                                           Mark as archived
-                                        </a>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
-                                           Mark as deleted
-                                        </a>
+                                        @if (item.FormStatusId != 1)
+                                        {
+                                            <form asp-action="ChangeStatus">
+                                                <input type="hidden" name="statusid" value="1" />
+                                                <input type="hidden" name="complaintformid" value="@item.Id" />
+                                                <input type="submit" class="dropdown-item" value="Mark as created" />
+                                            </form>             
+                                        }
+                                        @if (item.FormStatusId != 6)
+                                        {
+                                            <form asp-action="ChangeStatus">
+                                                <input type="hidden" name="statusid" value="6" />
+                                                <input type="hidden" name="complaintformid" value="@item.Id" />
+                                                <input type="submit" class="dropdown-item" value="Mark as archived" />
+                                            </form>          
+                                        }
+                                        @if (item.FormStatusId != 7)
+                                        {
+                                            <form asp-action="ChangeStatus">
+                                                <input type="hidden" name="statusid" value="7" />
+                                                <input type="hidden" name="complaintformid" value="@item.Id" />
+                                                <input type="submit" class="dropdown-item" value="Mark as deleted" />
+                                            </form>           
+                                        }
                                     </div>
                                   </div>
                                 </td>

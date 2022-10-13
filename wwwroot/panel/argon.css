@@ -4442,7 +4442,7 @@ input[type='button'].btn-block
     text-align: inherit;
     white-space: nowrap;
 
-    color: #212529;
+    color: #212529 !important;
     border: 0; 
     background-color: transparent;
 }

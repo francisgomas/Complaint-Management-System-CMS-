@@ -71,5 +71,6 @@ namespace CMS.Data
         public DbSet<Gender> Gender { get; set; }
         public DbSet<ComplainantDetails> ComplainantDetails { get; set; }
         public DbSet<ComplaintDetails> ComplaintDetails { get; set; }
+        public DbSet<Notification> Notification { get; set; }
     }
 }

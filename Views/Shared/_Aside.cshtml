@@ -29,10 +29,23 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" asp-controller="ComplaintForms" asp-action="Index">
-                <i class="fas fa-folder text-warning"></i>
-                <span class="nav-link-text">Complaint Forms</span>
-              </a>
+                <a class="nav-link active" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-forms">
+                    <i class="fas fa-folder text-warning"></i>
+                    <span class="nav-link-text">Complaint Forms</span>
+                </a>
+                <div class="collapse show" id="navbar-forms">
+                    <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                            <a asp-controller="ComplaintForms" asp-action="Index" asp-route-id="1" class="nav-link">Created</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="ComplaintForms" asp-action="Index" asp-route-id="6" class="nav-link">Archived</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="ComplaintForms" asp-action="Index" asp-route-id="7" class="nav-link">Deleted</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" asp-controller="Reports" asp-action="Index">

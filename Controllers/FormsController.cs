@@ -1,6 +1,7 @@
 ﻿using CMS.Data;
 using CMS.Models;
 using CMS.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,13 @@ namespace CMS.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IEmailService _emailService = null;
-        public FormsController(ApplicationDbContext context, IEmailService emailService)
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public FormsController(ApplicationDbContext context, IEmailService emailService, RoleManager<IdentityRole> roleManager)
         {
             _emailService = emailService;
             _context = context; 
+            _roleManager = roleManager;
         }
 
         private async Task GetAllData()
@@ -42,6 +46,28 @@ namespace CMS.Controllers
             return View();
         }
 
+        private async Task<string> FindRandomServiceHead()
+        {
+            var role = await _roleManager.FindByIdAsync("1");
+            var user = await _context.Users.Where(x => x.RoleId == role.Name)
+                .OrderBy(x => Guid.NewGuid())
+                .FirstOrDefaultAsync();
+
+            if (user == null) return null;
+            return user.Id;
+        }
+
+        private async Task AddNotification(Guid id, string desc, string userid)
+        {
+            var notification = new Notification();
+            notification.ComplaintFormId = id;
+            notification.Description = desc;
+            notification.UserId = userid;
+
+            _context.Add(notification);
+            await _context.SaveChangesAsync();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ComplaintForm complaintForm)
@@ -49,23 +75,34 @@ namespace CMS.Controllers
             await GetAllData();
             if (ModelState.IsValid)
             {
+                var randomUserId = await FindRandomServiceHead();
                 complaintForm.TrackingId = GenerateTrackingId();
+                complaintForm.AssignedToId = randomUserId;
                 _context.Add(complaintForm);
-                await _context.SaveChangesAsync();
+                var result = await _context.SaveChangesAsync();
 
-                ViewBag.SuccessMessage = "Tracking Number: " + complaintForm.TrackingId;
+                if (result > 0)
+                {
+                    ViewBag.SuccessMessage = "Tracking Number: " + complaintForm.TrackingId;
 
-                //send email
-                var emailDetails = new EmailData();
-                emailDetails.EmailToId = complaintForm.ComplainantDetails.Email;
-                emailDetails.EmailToName = complaintForm.ComplainantDetails.FirstName + " " + complaintForm.ComplainantDetails.LastName;
-                emailDetails.EmailSubject = "Confirmation Email - Ministry of Health & Medical Services";
-                emailDetails.EmailBody = "Thank you for using our CMS (Complaint Management System)! We have received your submission " +
-                    "and it will be processed shortly. Your application tracking number is " + complaintForm.TrackingId + ". Please use the " +
-                    "<strong>Track my application</strong> feature to determine the progress of your complaint!";
+                    //send email
+                    var emailDetails = new EmailData();
+                    emailDetails.EmailToId = complaintForm.ComplainantDetails.Email;
+                    emailDetails.EmailToName = complaintForm.ComplainantDetails.FirstName + " " + complaintForm.ComplainantDetails.LastName;
+                    emailDetails.EmailSubject = "Confirmation Email - Ministry of Health & Medical Services";
+                    emailDetails.EmailBody = "Thank you for using our CMS (Complaint Management System)! We have received your submission " +
+                        "and it will be processed shortly. Your application tracking number is " + complaintForm.TrackingId + ". Please use the " +
+                        "<strong>Track my application</strong> feature to determine the progress of your complaint!";
+
+                    await _emailService.SendEmail(emailDetails);
+                    await AddNotification(complaintForm.Id, "New complaint form submission!", randomUserId);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "An unknown error has occured";
+                }
 
                 ModelState.Clear();
-                await _emailService.SendEmail(emailDetails);
                 return View();
             }
 

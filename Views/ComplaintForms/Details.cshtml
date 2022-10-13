@@ -1,69 +1,197 @@
 ﻿@model CMS.Models.ComplaintForm
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Complaint Form - Details";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<!DOCTYPE html>
+<partial name="_Aside" />
+<div class="main-content" id="panel">
+<partial name="_Navbar" />
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-controller="ComplaintForms" asp-action="Index" class="btn btn-sm btn-success btn-round btn-icon">
+                        <span class="btn-inner--icon"><i class="fas fa-arrow-left"></i></span>
+                        <span class="btn-inner--text">Back to List</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div>
-    <h4>ComplaintForm</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TrackingId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TrackingId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplainantDetails)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ComplainantDetails.ContactNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ComplaintDetails)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ComplaintDetails.ComplaintBehalf)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FormStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FormStatus.FormStatusName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FileName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FileName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-    </dl>
+<div class="container-fluid mt--6">
+    <div class="card mb-4">
+        <!-- Card body -->
+        <div class="card-body">
+            <!-- Form groups used in grid -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.TrackingId)</label>
+                            <input class="form-control" value="@Html.DisplayFor(model => model.TrackingId)" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.FirstName)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.FirstName)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.MiddleName)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.MiddleName)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.LastName)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.LastName)" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.Email)</label>
+                        <input class="form-control" type="email" asp-for="ComplainantDetails.Email" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.DateofBirth)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.DateofBirth)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.Gender.Name)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.Gender.Name)" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.Country.Name)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.Country.Name)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.Country.Phonecode)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.Country.Phonecode)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.ContactNumber)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.ContactNumber)" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.ResidentialAddr)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.ResidentialAddr)" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.PostalAddr)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.PostalAddr)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplainantDetails.TownCity)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplainantDetails.TownCity)" readonly />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.DateofIncident)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.DateofIncident)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.HealthFacility.Name)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.HealthFacility.Name)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintReason.Name)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintReason.Name)" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintFirstTime)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintFirstTime)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintBehalf)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintBehalf)" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintFirstTimeReason)</label>
+                        <textarea class="form-control" readonly >@Html.DisplayFor(model => model.ComplaintDetails.ComplaintFirstTimeReason)</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintBehalfReason)</label>
+                        <textarea class="form-control" readonly >@Html.DisplayFor(model => model.ComplaintDetails.ComplaintBehalfReason)</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintExplanation)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintExplanation)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.Remedy)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.Remedy)" readonly />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>
-</body>
-</html>

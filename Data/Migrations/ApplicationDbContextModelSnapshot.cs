@@ -238,6 +238,9 @@ namespace CMS.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AssignedToId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("ComplainantId")
                         .HasColumnType("int");
 
@@ -260,6 +263,8 @@ namespace CMS.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssignedToId");
 
                     b.HasIndex("ComplainantId");
 
@@ -459,6 +464,45 @@ namespace CMS.Data.Migrations
                     b.ToTable("Hospital");
                 });
 
+            modelBuilder.Entity("CMS.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<Guid?>("ComplaintFormId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("LastUpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplaintFormId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notification");
+                });
+
             modelBuilder.Entity("CMS.Models.NursingStation", b =>
                 {
                     b.Property<int>("Id")
@@ -510,13 +554,13 @@ namespace CMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 10, 13, 13, 44, 35, 943, DateTimeKind.Local).AddTicks(7092),
+                            CreatedAt = new DateTime(2022, 10, 13, 22, 45, 17, 776, DateTimeKind.Local).AddTicks(8844),
                             Name = "Active"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 10, 13, 13, 44, 35, 943, DateTimeKind.Local).AddTicks(7097),
+                            CreatedAt = new DateTime(2022, 10, 13, 22, 45, 17, 776, DateTimeKind.Local).AddTicks(8846),
                             Name = "Inactive"
                         });
                 });
@@ -703,6 +747,10 @@ namespace CMS.Data.Migrations
 
             modelBuilder.Entity("CMS.Models.ComplaintForm", b =>
                 {
+                    b.HasOne("CMS.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("AssignedToId");
+
                     b.HasOne("CMS.Models.ComplainantDetails", "ComplainantDetails")
                         .WithMany()
                         .HasForeignKey("ComplainantId")
@@ -720,6 +768,8 @@ namespace CMS.Data.Migrations
                         .HasForeignKey("FormStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("ComplainantDetails");
 
@@ -768,6 +818,27 @@ namespace CMS.Data.Migrations
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("CMS.Models.Notification", b =>
+                {
+                    b.HasOne("CMS.Models.ComplaintForm", "ComplaintForm")
+                        .WithMany()
+                        .HasForeignKey("ComplaintFormId");
+
+                    b.HasOne("CMS.Models.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
+                    b.HasOne("CMS.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("ComplaintForm");
 
                     b.Navigation("Status");
                 });

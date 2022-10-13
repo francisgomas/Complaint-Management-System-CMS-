@@ -21,6 +21,13 @@
 										<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-hidden="true"></button>
 									</div>
 							  }
+							  if(ViewBag.ErrorMessage != null)
+							  {
+									<div class="alert alert-dismissible alert-danger">
+										Error! <strong>@ViewBag.ErrorMessage</strong>.
+										<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-hidden="true"></button>
+									</div>
+							  }
 						}
 						<form class="row" asp-action="Index">
 							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
