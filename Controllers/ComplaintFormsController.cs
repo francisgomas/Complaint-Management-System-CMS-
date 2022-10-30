@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CMS.Data;
 using CMS.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CMS.Controllers
 {
     public class ComplaintFormsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ComplaintFormsController(ApplicationDbContext context)
+        public ComplaintFormsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         private Task setTitle(int id = 0)
@@ -34,14 +37,24 @@ namespace CMS.Controllers
         // GET: ComplaintForms
         public async Task<IActionResult> Index(int id)
         {
-            var applicationDbContext = _context.ComplaintForms.Include(c => c.ComplainantDetails)
+            if (id == 1 || id == 6 || id == 7)
+            {
+                var applicationDbContext = _context.ComplaintForms.Include(c => c.ComplainantDetails)
                 .Include(c => c.ComplaintDetails)
                 .Include(c => c.FormStatus)
-                .Where(c => c.FormStatusId == id)
-                .OrderByDescending(c => c.UpdatedAt);
+                .Include(c => c.ApplicationUser)
+                .Where(c => c.FormStatusId == id);
 
-            await setTitle(id);
-            return View(await applicationDbContext.ToListAsync());
+                if (!User.IsInRole("Systems Administrator"))
+                {
+                    var user = await _userManager.GetUserAsync(User);
+                    applicationDbContext = applicationDbContext.Where(c => c.AssignedToId == user.Id);
+                }
+
+                await setTitle(id);
+                return View(await applicationDbContext.OrderByDescending(c => c.UpdatedAt).ToListAsync());
+            }
+            return NotFound();
         }
 
         [HttpPost]
@@ -52,6 +65,7 @@ namespace CMS.Controllers
                 .Include(c => c.ComplainantDetails)
                 .Include(c => c.ComplaintDetails)
                 .Include(c => c.FormStatus)
+                .Include(c => c.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == complaintformid);
 
             var statuschk = await _context.FormStatus.FirstOrDefaultAsync(c => c.Id == statusid);
@@ -95,95 +109,92 @@ namespace CMS.Controllers
             return View(complaintForm);
         }
 
-        // GET: ComplaintForms/Create
-        public IActionResult Create()
-        {
-            ViewData["ComplainantId"] = new SelectList(_context.ComplainantDetails, "Id", "ContactNumber");
-            ViewData["ComplaintId"] = new SelectList(_context.ComplaintDetails, "Id", "ComplaintBehalf");
-            ViewData["FormStatusId"] = new SelectList(_context.FormStatus, "Id", "FormStatusName");
-            return View();
-        }
-
-        // POST: ComplaintForms/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TrackingId,ComplainantId,ComplaintId,FormStatusId,FileName,CreatedAt,UpdatedAt")] ComplaintForm complaintForm)
-        {
-            if (ModelState.IsValid)
-            {
-                complaintForm.Id = Guid.NewGuid();
-                _context.Add(complaintForm);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ComplainantId"] = new SelectList(_context.ComplainantDetails, "Id", "ContactNumber", complaintForm.ComplainantId);
-            ViewData["ComplaintId"] = new SelectList(_context.ComplaintDetails, "Id", "ComplaintBehalf", complaintForm.ComplaintId);
-            ViewData["FormStatusId"] = new SelectList(_context.FormStatus, "Id", "FormStatusName", complaintForm.FormStatusId);
-            return View(complaintForm);
-        }
-
-        // GET: ComplaintForms/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        // GET: ComplaintForms/Logs/5
+        public async Task<IActionResult> Logs(Guid? id)
         {
             if (id == null || _context.ComplaintForms == null)
             {
                 return NotFound();
             }
 
-            var complaintForm = await _context.ComplaintForms.FindAsync(id);
-            if (complaintForm == null)
+            var notifications = await _context.Notification
+                .Include(c => c.Status)
+                .Include(c => c.ApplicationUser)
+                .Where(c => c.ComplaintFormId == id)
+                .OrderByDescending(c => c.CreatedOn)
+                .ToListAsync();
+
+            if (notifications == null)
             {
                 return NotFound();
             }
-            ViewData["ComplainantId"] = new SelectList(_context.ComplainantDetails, "Id", "ContactNumber", complaintForm.ComplainantId);
-            ViewData["ComplaintId"] = new SelectList(_context.ComplaintDetails, "Id", "ComplaintBehalf", complaintForm.ComplaintId);
-            ViewData["FormStatusId"] = new SelectList(_context.FormStatus, "Id", "FormStatusName", complaintForm.FormStatusId);
-            return View(complaintForm);
+
+            return View(notifications);
         }
 
-        // POST: ComplaintForms/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        private async void GetUsers()
+        {
+            if (User.IsInRole("Systems Administrator"))
+            {
+                ViewData["Users"] = _context.Users.Where(c => c.Email != User.Identity.Name).ToList();
+               
+            }
+            else if(User.IsInRole("Customer Service Head"))
+            {
+                ViewData["Users"] = await _userManager.GetUsersInRoleAsync("Section Head");
+            }
+            else
+
+            {
+                ViewData["Users"] = await _userManager.GetUsersInRoleAsync("Customer Service Head");
+            }
+        }
+
+        // GET: ComplaintForms/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            var cForm = await _context.ComplaintForms
+                                .Include(c => c.ComplaintDetails)
+                                .Include(c => c.ComplainantDetails)
+                                .FirstOrDefaultAsync(c => c.Id == id);
+            if (cForm == null)
+            {
+                return NotFound();
+            }
+
+            GetUsers();
+            return View(cForm);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,TrackingId,ComplainantId,ComplaintId,FormStatusId,FileName,CreatedAt,UpdatedAt")] ComplaintForm complaintForm)
+        public async Task<IActionResult> Edit(ComplaintForm complaintForm)
         {
-            if (id != complaintForm.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                complaintForm.FormStatusId = 2;
+                complaintForm.UpdatedAt = DateTime.Now;
+                _context.Update(complaintForm);
+                await _context.SaveChangesAsync();
+
+                var user = await _userManager.FindByIdAsync(complaintForm.AssignedToId);
+                if (user != null)
                 {
-                    _context.Update(complaintForm);
+                    var notification = new Notification();
+                    notification.StatusId = 1;
+                    notification.ComplaintFormId = complaintForm.Id;
+                    notification.Description = $"Assigned to {user.FirstName + " " + user.LastName + " (" + user.Email + ")"}";
+                    notification.UserId = complaintForm.AssignedToId;
+
+                    _context.Add(notification);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ComplaintFormExists(complaintForm.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                
+                return RedirectToAction("Index", new {id = 1});
             }
-            ViewData["ComplainantId"] = new SelectList(_context.ComplainantDetails, "Id", "ContactNumber", complaintForm.ComplainantId);
-            ViewData["ComplaintId"] = new SelectList(_context.ComplaintDetails, "Id", "ComplaintBehalf", complaintForm.ComplaintId);
-            ViewData["FormStatusId"] = new SelectList(_context.FormStatus, "Id", "FormStatusName", complaintForm.FormStatusId);
-            return View(complaintForm);
-        }
 
-        private bool ComplaintFormExists(Guid id)
-        {
-          return _context.ComplaintForms.Any(e => e.Id == id);
+            GetUsers();
+            return View(complaintForm);
         }
     }
 }

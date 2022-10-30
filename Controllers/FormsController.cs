@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Headers;
 
 namespace CMS.Controllers
 {
@@ -70,7 +71,7 @@ namespace CMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(ComplaintForm complaintForm)
+        public async Task<IActionResult> Index(ComplaintForm complaintForm, List<IFormFile> userfiles)
         {
             await GetAllData();
             if (ModelState.IsValid)
@@ -78,6 +79,22 @@ namespace CMS.Controllers
                 var randomUserId = await FindRandomServiceHead();
                 complaintForm.TrackingId = GenerateTrackingId();
                 complaintForm.AssignedToId = randomUserId;
+
+                if (userfiles.Count > 0)
+                {
+                    foreach(var file in userfiles)
+                    {
+                        string filename = file.FileName;
+                        filename = Path.GetFileName(Convert.ToString(Guid.NewGuid()) + "." + filename.Split('.').Last());  
+                        Path.GetFileName(filename);
+                        string uploadpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot//uploads", filename);
+                        var stream = new FileStream(uploadpath, FileMode.Create);
+                        file.CopyTo(stream);
+
+                        complaintForm.FileName += " | " + filename;
+                    }
+                }
+
                 _context.Add(complaintForm);
                 var result = await _context.SaveChangesAsync();
 

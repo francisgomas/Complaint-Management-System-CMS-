@@ -3,7 +3,7 @@
 		autoclose: true,
 	});
 
-	$("#jobs-application-resume").fileinput({
+	$("#userfiles").fileinput({
 		required: false,
 		browseClass: "btn btn-secondary",
 		browseIcon: "",

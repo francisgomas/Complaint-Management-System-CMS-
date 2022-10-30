@@ -39,6 +39,7 @@
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.FirstName)</th>
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.LastName)</th>
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.Email)</th>
+                            <th>Assigned To</th>
                             <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
                             <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
                             <th></th>
@@ -50,6 +51,7 @@
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.FirstName)</th>
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.LastName)</th>
                             <th>@Html.DisplayNameFor(model => model.ComplainantDetails.Email)</th>
+                            <th>Assigned To</th>
                             <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
                             <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
                             <th></th>
@@ -62,6 +64,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.ComplainantDetails.FirstName)</td>
                                 <td>@Html.DisplayFor(modelItem => item.ComplainantDetails.LastName)</td>
                                 <td>@Html.DisplayFor(modelItem => item.ComplainantDetails.Email)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ApplicationUser.Email)</td>
                                 <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
                                 <td>@Html.DisplayFor(modelItem => item.UpdatedAt)</td>
                                 <td class="text-right">
@@ -73,8 +76,11 @@
                                         <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">
                                            View details
                                         </a>
+                                        <a asp-action="Logs" asp-route-id="@item.Id" class="dropdown-item">
+                                           View logs
+                                        </a>
                                         <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
-                                           Edit / Assign
+                                           Assign
                                         </a>
                                         @if (item.FormStatusId != 1)
                                         {
