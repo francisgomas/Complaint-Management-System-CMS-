@@ -91,7 +91,7 @@ namespace CMS.Controllers
                         var stream = new FileStream(uploadpath, FileMode.Create);
                         file.CopyTo(stream);
 
-                        complaintForm.FileName += " | " + filename;
+                        complaintForm.FileName += filename + "|";
                     }
                 }
 

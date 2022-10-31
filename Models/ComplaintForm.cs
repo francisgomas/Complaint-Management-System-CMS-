@@ -29,9 +29,10 @@ namespace CMS.Models
         [ForeignKey(nameof(AssignedToId))]
         public virtual ApplicationUser? ApplicationUser { get; set; } = null;
         public string? FileName { get; set; } = string.Empty;
-        [Required]
+        [NotMapped]
+        public string[]? Files { get; set; }
         [StringLength(100)]
-        public string Comments { get; set; }
+        public string? Comments { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
     }

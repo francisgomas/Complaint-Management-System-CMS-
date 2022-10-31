@@ -26,6 +26,7 @@ namespace CMS.Controllers
                 .Include(c => c.ComplaintForm)
                 .Include(c => c.ApplicationUser)
                 .Include(c => c.Status)
+                .Where(c => c.StatusId == 1)
                 .FirstOrDefaultAsync(m => m.ComplaintFormId == id);
 
             if (notification != null)

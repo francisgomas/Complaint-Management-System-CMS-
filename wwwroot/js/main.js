@@ -1,6 +1,6 @@
 ﻿jQuery(document).ready(function () {
 	$('.dobpicker').datepicker({
-		autoclose: true,
+		autoclose: true
 	});
 
 	$("#userfiles").fileinput({

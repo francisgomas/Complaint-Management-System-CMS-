@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4hWQd0YMnY8D3eTASyYf572vTp7fJxfYCw6qhw4BXfs=",
+  "Hash": "C+BKAP9tIf1FZYmZRvIJttpDDSU6CpF7U+In4TfAktQ=",
   "Source": "CMS",
   "BasePath": "_content/CMS",
   "Mode": "Default",
@@ -29053,6 +29053,23 @@
       "OriginalItemSpec": "wwwroot\\uploads\\39cd7395-6401-43f0-9bde-2fcea063c196.jpg"
     },
     {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\49cbf689-1a91-46c7-9f7f-56791c804665.PNG",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "uploads/49cbf689-1a91-46c7-9f7f-56791c804665.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\49cbf689-1a91-46c7-9f7f-56791c804665.PNG"
+    },
+    {
       "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\51f6fb256629fc755b8870c801092942.png",
       "SourceId": "CMS",
       "SourceType": "Discovered",
@@ -29119,6 +29136,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\d319618e-5cc3-43ba-9736-c93b901e0a10.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\ec991693-86ef-476c-a30b-7fcf88dbe528.PNG",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "uploads/ec991693-86ef-476c-a30b-7fcf88dbe528.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\ec991693-86ef-476c-a30b-7fcf88dbe528.PNG"
     }
   ]
 }

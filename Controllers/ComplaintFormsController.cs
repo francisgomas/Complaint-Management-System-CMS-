@@ -37,7 +37,8 @@ namespace CMS.Controllers
         // GET: ComplaintForms
         public async Task<IActionResult> Index(int id)
         {
-            if (id == 1 || id == 6 || id == 7)
+            var chkStatus = await _context.FormStatus.FindAsync(id);
+            if (chkStatus != null)
             {
                 var applicationDbContext = _context.ComplaintForms.Include(c => c.ComplainantDetails)
                 .Include(c => c.ComplaintDetails)
@@ -106,6 +107,11 @@ namespace CMS.Controllers
                 return NotFound();
             }
 
+            if (complaintForm.FileName != "")
+            {
+                complaintForm.Files = complaintForm.FileName.Split("|");
+            }
+
             return View(complaintForm);
         }
 
@@ -172,6 +178,11 @@ namespace CMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                complaintForm = await _context.ComplaintForms
+                                .Include(c => c.ComplaintDetails)
+                                .Include(c => c.ComplainantDetails)
+                                .FirstOrDefaultAsync(c => c.Id == complaintForm.Id);
+
                 complaintForm.FormStatusId = 2;
                 complaintForm.UpdatedAt = DateTime.Now;
                 _context.Update(complaintForm);
@@ -183,7 +194,7 @@ namespace CMS.Controllers
                     var notification = new Notification();
                     notification.StatusId = 1;
                     notification.ComplaintFormId = complaintForm.Id;
-                    notification.Description = $"Assigned to {user.FirstName + " " + user.LastName + " (" + user.Email + ")"}";
+                    notification.Description = $"Assigned to {user.FirstName + " " + user.LastName}";
                     notification.UserId = complaintForm.AssignedToId;
 
                     _context.Add(notification);

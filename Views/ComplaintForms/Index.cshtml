@@ -79,19 +79,12 @@
                                         <a asp-action="Logs" asp-route-id="@item.Id" class="dropdown-item">
                                            View logs
                                         </a>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
-                                           Assign
-                                        </a>
-                                        @if (item.FormStatusId != 1)
+                                        @if (item.FormStatusId != 6 && item.FormStatusId != 7)
                                         {
-                                            <form asp-action="ChangeStatus">
-                                                <input type="hidden" name="statusid" value="1" />
-                                                <input type="hidden" name="complaintformid" value="@item.Id" />
-                                                <input type="submit" class="dropdown-item" value="Mark as created" />
-                                            </form>             
-                                        }
-                                        @if (item.FormStatusId != 6)
-                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item">
+                                                Assign
+                                            </a>             
+
                                             <form asp-action="ChangeStatus">
                                                 <input type="hidden" name="statusid" value="6" />
                                                 <input type="hidden" name="complaintformid" value="@item.Id" />

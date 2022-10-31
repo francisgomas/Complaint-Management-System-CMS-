@@ -17,9 +17,9 @@
                     <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    <a asp-controller="ComplaintForms" asp-action="Index" class="btn btn-sm btn-success btn-round btn-icon">
-                        <span class="btn-inner--icon"><i class="fas fa-arrow-left"></i></span>
-                        <span class="btn-inner--text">Back to List</span>
+                    <a asp-controller="ComplaintForms" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-sm btn-secondary btn-round btn-icon">
+                        <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+                        <span class="btn-inner--text">View details</span>
                     </a>
                 </div>
             </div>
