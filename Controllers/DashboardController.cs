@@ -17,16 +17,20 @@ namespace CMS.Controllers
             _context = context;
             _userManager = userManager;
         }
+
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["Created"] = _context.ComplaintForms.Count(x => x.FormStatusId == 1);
-            ViewData["Archived"] = _context.ComplaintForms.Count(x => x.FormStatusId == 6);
-            ViewData["Deleted"] = _context.ComplaintForms.Count(x => x.FormStatusId == 7);
-            ViewData["Users"] = _context.Users.Count();
-
             List<int> customerhead = new List<int>();
             List<int> sectionhead = new List<int>();
             List<int> ps = new List<int>();
+
+            ViewData["Users"] = _context.Users.Count();
+            ViewData["HealthFacility"] = _context.HealthFacility.Count();
+            ViewData["ComplaintReason"] = _context.ComplaintReason.Count();
+            ViewData["Hospital"] = _context.Hospital.Count();
+            ViewData["HealthCenter"] = _context.HealthCenter.Count();
+            ViewData["NursingStation"] = _context.NursingStation.Count();
 
             for (int i = 1; i <= 7; i++)
             {

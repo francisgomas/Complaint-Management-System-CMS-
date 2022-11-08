@@ -55,77 +55,52 @@ namespace CMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitToPS(ComplaintForm complaintForm)
+        public async Task<IActionResult> SubmitToPS(ComplaintPS complaintForm)
         {
-            var checkTrackingId = await _context.ComplaintForms
+            if (ModelState.IsValid)
+            {
+                var checkTrackingId = await _context.ComplaintForms
                             .FirstOrDefaultAsync(c => c.TrackingId == complaintForm.TrackingId);
-                
-            if (checkTrackingId == null)
-            {
-                ViewBag.ErrorMessage = "Tracking number entered does not exist!";
-            }
-            else
-            {
-                if (checkTrackingId.FormStatusId == 3)
+
+                if (checkTrackingId == null)
                 {
-                    var user = await _context.Users
-                                        .Where(x => x.RoleId == "Permanent Secretary")
-                                        .FirstOrDefaultAsync();
-
-                    checkTrackingId.FormStatusId = 5;
-                    checkTrackingId.Comments = complaintForm.Comments;
-                    checkTrackingId.UpdatedAt = DateTime.Now;
-                    checkTrackingId.AssignedToId = user.Id;
-                    _context.Update(checkTrackingId);
-                    await _context.SaveChangesAsync();
-
-                    var notification = new Notification();
-                    notification.ComplaintFormId = checkTrackingId.Id;
-                    notification.Description = "Awaiting response from PS";
-                    notification.LongDescription = notification.Description;
-                    notification.UserId = user.Id;
-
-                    _context.Add(notification);
-                    await _context.SaveChangesAsync();
-
-                    ViewBag.SuccessMessage = "Your application has been escalated to PS!";
+                    ViewBag.ErrorMessage = "Tracking number entered does not exist!";
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "Your application is still under review by Section Head!";
+                    if (checkTrackingId.FormStatusId == 3)
+                    {
+                        var user = await _context.Users
+                                            .Where(x => x.RoleId == "Permanent Secretary")
+                                            .FirstOrDefaultAsync();
+
+                        checkTrackingId.FormStatusId = 5;
+                        checkTrackingId.Comments = complaintForm.Comments;
+                        checkTrackingId.UpdatedAt = DateTime.Now;
+                        checkTrackingId.AssignedToId = user.Id;
+                        _context.Update(checkTrackingId);
+                        await _context.SaveChangesAsync();
+
+                        var notification = new Notification();
+                        notification.ComplaintFormId = checkTrackingId.Id;
+                        notification.Description = "Awaiting response from PS";
+                        notification.LongDescription = notification.Description;
+                        notification.UserId = user.Id;
+
+                        _context.Add(notification);
+                        await _context.SaveChangesAsync();
+
+                        ViewBag.SuccessMessage = "Your application has been escalated to PS!";
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Your application is still under review by Section Head!";
+                    }
                 }
-            }
-
-                
-
-               
-                /*complaintForm.AssignedToId = randomUserId;
-                _context.Add(complaintForm);
-                var result = await _context.SaveChangesAsync();
-
-                if (result > 0)
-                {
-                    ViewBag.SuccessMessage = "Tracking Number: " + complaintForm.TrackingId;
-
-                    //send email
-                    var emailDetails = new EmailData();
-                    emailDetails.EmailToId = complaintForm.ComplainantDetails.Email;
-                    emailDetails.EmailToName = complaintForm.ComplainantDetails.FirstName + " " + complaintForm.ComplainantDetails.LastName;
-                    emailDetails.EmailSubject = "Confirmation Email - Ministry of Health & Medical Services";
-                    emailDetails.EmailBody = "Thank you for using our CMS (Complaint Management System)! We have received your submission " +
-                        "and it will be processed shortly. Your application tracking number is " + complaintForm.TrackingId + ". Please use the " +
-                        "<strong>Track my application</strong> feature to determine the progress of your complaint!";
-
-                    await _emailService.SendEmail(emailDetails);
-                    await AddNotification(complaintForm.Id, "New complaint form submission!", randomUserId);
-                }
-                else
-                {
-                    ViewBag.ErrorMessage = "An unknown error has occured";
-                }*/
-
                 ModelState.Clear();
-
+                return View();
+            }
+            
             return View(complaintForm);
         }
 
