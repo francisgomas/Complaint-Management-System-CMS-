@@ -23,6 +23,30 @@ namespace CMS.Controllers
             ViewData["Archived"] = _context.ComplaintForms.Count(x => x.FormStatusId == 6);
             ViewData["Deleted"] = _context.ComplaintForms.Count(x => x.FormStatusId == 7);
             ViewData["Users"] = _context.Users.Count();
+
+            List<int> customerhead = new List<int>();
+            List<int> sectionhead = new List<int>();
+            List<int> ps = new List<int>();
+
+            for (int i = 1; i <= 7; i++)
+            {
+                customerhead.Add(_context.ComplaintForms
+                                    .Where(x => x.ApplicationUser.RoleId == "Customer Service Head")
+                                    .Count(x => x.FormStatusId == i));
+
+                sectionhead.Add(_context.ComplaintForms
+                                    .Where(x => x.ApplicationUser.RoleId == "Section Head")
+                                    .Count(x => x.FormStatusId == i));
+
+                ps.Add(_context.ComplaintForms
+                                    .Where(x => x.ApplicationUser.RoleId == "Permanent Secretary")
+                                    .Count(x => x.FormStatusId == i));
+            }
+
+            ViewBag.Customerhead = customerhead;
+            ViewBag.Sectionhead = sectionhead;
+            ViewBag.PS = ps;
+
             var notifications = _context.Notification
                                 .Include(c => c.ComplaintForm.ComplainantDetails)
                                 .OrderBy(c => c.StatusId)

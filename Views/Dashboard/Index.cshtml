@@ -103,25 +103,13 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-                  <h5 class="h3 text-white mb-0">Sales value</h5>
-                </div>
-                <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                  </ul>
+                  <h5 class="h3 text-white mb-0">Total complaints</h5>
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <!-- Chart -->
               <div class="chart">
-                <!-- Chart wrapper -->
-                <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
+                <canvas id="barchart" class="chart-canvas"></canvas>
               </div>
             </div>
           </div>
@@ -203,4 +191,71 @@
       </div>
     </div>
   </div>
+
+  <script>
+    var barCanvas = document.getElementById("barchart");
+
+    var CustomerServiceHead = [];
+    var SectionHead = [];
+    var PS = [];
+
+    @{
+        for (int i = 0; i < 7; i++) {
+            @:CustomerServiceHead.push(@ViewBag.Customerhead[i]);
+            @:SectionHead.push(@ViewBag.Sectionhead[i]);
+            @:PS.push(@ViewBag.PS[i]);
+        }
+    }
+    
+    var CustomerServiceHead = {
+        label: 'Customer Service Head',
+        data: CustomerServiceHead,
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderWidth: 0,  
+        lineTension: 0
+    };
+
+    var SectionHead = {
+        label: 'Section Head',
+        data: SectionHead,
+        backgroundColor: 'rgb(54, 162, 235)',
+        borderWidth: 0,  
+        lineTension: 0
+    };
+
+    var PS = {
+        label: 'Permanent Secretary',
+        data: PS,
+        backgroundColor: 'rgb(157, 230, 41)',
+        borderWidth: 0,  
+        lineTension: 0
+    };
+
+    var datasetvalues = {
+        labels: ["Created", "In Processing", "Reviewed", "Processed", "Awaiting PS", "Archived", "Deleted"],
+        datasets: [CustomerServiceHead, SectionHead, PS]
+    }
+
+    var chartOptions = {
+        scales: {
+            xAxes: [{
+                barPercentage: 1,
+                categoryPercentage: 0.6,
+            }],
+            yAxes: [{
+                barPecentage: 1,
+                categoryPercentage: 0.6,
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+        }
+    };
+
+    var barChart = new Chart(barCanvas, {
+        type: 'bar',
+        data: datasetvalues,
+        options: chartOptions
+    });
+  </script>
 

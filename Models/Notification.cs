@@ -12,6 +12,8 @@ namespace CMS.Models
         [Required]
         [StringLength(100)]
         public string Description { get; set; }
+        [Display(Name = "Long Description")]
+        public string LongDescription { get; set; } = string.Empty;
         public int? StatusId { get; set; } = 1;
         [ForeignKey(nameof(StatusId))]
         public virtual Status? Status { get; set; } = null;
@@ -21,6 +23,5 @@ namespace CMS.Models
         public virtual ApplicationUser? ApplicationUser { get; set; } = null;
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public DateTime LastUpdatedOn { get; set; } = DateTime.Now;
-
     }
 }

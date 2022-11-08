@@ -38,7 +38,7 @@
                     <div class="col-md-12 col-lg-4">
                         <div class="form-group">
                             <label asp-for="AssignedToId" class="control-label">Assign To</label>
-                            <select asp-for="AssignedToId" class="form-control">
+                            <select asp-for="AssignedToId" class="form-control" required >
                                 @foreach (var item in ViewData["Users"] as IEnumerable<CMS.Models.ApplicationUser>)
                                 {
                                     if (item.Id != Model.AssignedToId)
@@ -54,7 +54,7 @@
                     <div class="col-md-12 col-lg-8">
                         <div class="form-group">
                             <label asp-for="Comments" class="control-label">@Html.DisplayNameFor(model => model.Comments)</label>
-                            <input class="form-control" asp-for="Comments" />
+                            <input class="form-control" asp-for="Comments" required />
                             <span asp-validation-for="Comments" class="text-danger"></span>
                         </div>
                     </div>

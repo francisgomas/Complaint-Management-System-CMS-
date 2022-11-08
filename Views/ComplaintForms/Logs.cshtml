@@ -37,26 +37,26 @@
                     <thead class="thead-light">
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Description)</th>
+                            <th>@Html.DisplayNameFor(model => model.LongDescription)</th>
                             <th>Assigned To</th>
                             <th>@Html.DisplayNameFor(model => model.CreatedOn)</th>
-                            <th>@Html.DisplayNameFor(model => model.LastUpdatedOn)</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Description)</th>
+                            <th>@Html.DisplayNameFor(model => model.LongDescription)</th>
                             <th>Assigned To</th>
                             <th>@Html.DisplayNameFor(model => model.CreatedOn)</th>
-                            <th>@Html.DisplayNameFor(model => model.LastUpdatedOn)</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         @foreach (var item in Model) {
                             <tr>
                                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                <td>@Html.DisplayFor(modelItem => item.ApplicationUser.Email)</td>
+                                <td>@Html.DisplayFor(modelItem => item.LongDescription)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ApplicationUser.Email)</td>        
                                 <td>@Html.DisplayFor(modelItem => item.CreatedOn)</td>
-                                <td>@Html.DisplayFor(modelItem => item.LastUpdatedOn)</td>
                             </tr>
                         }
                     </tbody>

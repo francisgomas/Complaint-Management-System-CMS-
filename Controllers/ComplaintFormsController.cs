@@ -8,17 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using CMS.Data;
 using CMS.Models;
 using Microsoft.AspNetCore.Identity;
+using CMS.Services;
 
 namespace CMS.Controllers
 {
     public class ComplaintFormsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IEmailService _emailService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ComplaintFormsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ComplaintFormsController(ApplicationDbContext context, IEmailService emailService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _emailService = emailService;
             _userManager = userManager;
         }
 
@@ -146,15 +149,76 @@ namespace CMS.Controllers
                
             }
             else if(User.IsInRole("Customer Service Head"))
-            {
-                ViewData["Users"] = await _userManager.GetUsersInRoleAsync("Section Head");
+            { 
+                ViewData["Users"] = _context.Users.Where(c => c.RoleId == "Section Head").ToList();
             }
             else
-
             {
-                ViewData["Users"] = await _userManager.GetUsersInRoleAsync("Customer Service Head");
+                ViewData["Users"] = _context.Users.Where(c => c.RoleId == "Customer Service Head").ToList();
             }
         }
+
+        public async Task<IActionResult> RespondToComplainant(Guid? id)
+        {
+            var cForm = await _context.ComplaintForms
+                                .Include(c => c.ComplaintDetails)
+                                .Include(c => c.ComplainantDetails)
+                                .FirstOrDefaultAsync(c => c.Id == id);
+            if (cForm == null)
+            {
+                return NotFound();
+            }
+
+            return View("Response", cForm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RespondToComplainant(ComplaintForm complaintForm)
+        {
+            if (ModelState.IsValid)
+            {
+                var complaintsForm = await _context.ComplaintForms
+                                .Include(c => c.ComplaintDetails)
+                                .Include(c => c.ComplainantDetails)
+                                .FirstOrDefaultAsync(c => c.Id == complaintForm.Id);
+
+                if (complaintsForm != null)
+                {
+                    complaintsForm.Comments = complaintForm.Comments;
+                    complaintsForm.FormStatusId = 3;
+                    complaintsForm.UpdatedAt = DateTime.Now;
+                    _context.Update(complaintsForm);
+                    await _context.SaveChangesAsync();
+
+                    var notification = new Notification();
+                    notification.ComplaintFormId = complaintForm.Id;
+                    notification.Description = "Assigned to complainant";
+                    notification.LongDescription = complaintForm.Comments;
+
+                    _context.Add(notification);
+                    await _context.SaveChangesAsync();
+
+                    //send email
+                    var emailDetails = new EmailData();
+                    emailDetails.EmailToId = complaintsForm.ComplainantDetails.Email;
+                    emailDetails.EmailToName = complaintsForm.ComplainantDetails.FirstName + " " + complaintsForm.ComplainantDetails.LastName;
+                    emailDetails.EmailSubject = "Complaint Response - Ministry of Health & Medical Services";
+                    emailDetails.EmailBody = "Thank you for your patience. Please find response for your application with tracking number " + complaintsForm.TrackingId
+                         + "<p><strong>" + complaintsForm.Comments + "</strong></p>";
+
+                    await _emailService.SendEmail(emailDetails);
+                }
+
+                    
+
+                return RedirectToAction("Index", new { id = 1 });
+            }
+
+            GetUsers();
+            return View(complaintForm);
+        }
+
 
         // GET: ComplaintForms/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
@@ -178,15 +242,20 @@ namespace CMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                complaintForm = await _context.ComplaintForms
+                var complaintsForm = await _context.ComplaintForms
                                 .Include(c => c.ComplaintDetails)
                                 .Include(c => c.ComplainantDetails)
                                 .FirstOrDefaultAsync(c => c.Id == complaintForm.Id);
 
-                complaintForm.FormStatusId = 2;
-                complaintForm.UpdatedAt = DateTime.Now;
-                _context.Update(complaintForm);
-                await _context.SaveChangesAsync();
+                if (complaintsForm != null)
+                {
+                    complaintsForm.Comments = complaintForm.Comments;
+                    complaintsForm.AssignedToId = complaintForm.AssignedToId;
+                    complaintsForm.FormStatusId = 2;
+                    complaintsForm.UpdatedAt = DateTime.Now;
+                    _context.Update(complaintsForm);
+                    await _context.SaveChangesAsync();
+                }
 
                 var user = await _userManager.FindByIdAsync(complaintForm.AssignedToId);
                 if (user != null)
@@ -194,6 +263,7 @@ namespace CMS.Controllers
                     var notification = new Notification();
                     notification.StatusId = 1;
                     notification.ComplaintFormId = complaintForm.Id;
+                    notification.LongDescription = complaintForm.Comments;
                     notification.Description = $"Assigned to {user.FirstName + " " + user.LastName}";
                     notification.UserId = complaintForm.AssignedToId;
 

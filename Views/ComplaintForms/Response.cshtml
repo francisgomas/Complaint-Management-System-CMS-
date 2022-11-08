@@ -1,0 +1,51 @@
+﻿@model CMS.Models.ComplaintForm
+
+@{
+    ViewData["Title"] = "Complaint Form - Respond to complainant";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<partial name="_Aside" />
+<div class="main-content" id="panel">
+<partial name="_Navbar" />
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a asp-controller="ComplaintForms" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-sm btn-secondary btn-round btn-icon">
+                        <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+                        <span class="btn-inner--text">View details</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+        <div class="card mb-4">
+        <!-- Card body -->
+        <div class="card-body">
+            <form asp-action="RespondToComplainant">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label asp-for="Comments" class="control-label">@Html.DisplayNameFor(model => model.Comments)</label>
+                            <input class="form-control" asp-for="Comments" value="" required />
+                            <span asp-validation-for="Comments" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+</div>
+</div>
