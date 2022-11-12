@@ -44,10 +44,9 @@ namespace CMS.Models
         [StringLength(100)]
         [Display(Name = "Residential Address")]
         public string ResidentialAddr { get; set; }
-        [Required]
         [StringLength(100)]
         [Display(Name = "Postal Address")]
-        public string PostalAddr { get; set; }
+        public string? PostalAddr { get; set; }
         [Required]
         [StringLength(100)]
         [Display(Name = "Town/City")]

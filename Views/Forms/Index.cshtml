@@ -29,6 +29,7 @@
 									</div>
 							  }
 						}
+
 						<form class="row" asp-action="Index" enctype="multipart/form-data">
 							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 							<!-- Complainant Details-->
@@ -37,7 +38,7 @@
 							</div>
 							<div class="col-lg-4 form-group">
 								<label asp-for="ComplainantDetails.FirstName"></label><span class="requiredIcon">*</span>
-								<input asp-for="ComplainantDetails.FirstName" class="form-control required" placeholder="Enter your First Name"/>
+								<input asp-for="ComplainantDetails.FirstName" class="form-control required" placeholder="Enter your First Name" />
 								<span asp-validation-for="ComplainantDetails.FirstName" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
@@ -62,12 +63,16 @@
 							</div>
 							<div class="col-lg-4 form-group">
 								<label asp-for="ComplainantDetails.GenderId"></label><span class="requiredIcon">*</span>
-								<select asp-for="ComplainantDetails.GenderId" class="form-control" asp-items="ViewBag.Gender"></select>
+								<select asp-for="ComplainantDetails.GenderId" class="form-control" asp-items="ViewBag.Gender">
+									<option value="">Please select gender</option>
+								</select>
 								<span asp-validation-for="ComplainantDetails.GenderId" class="text-danger"></span>
 							</div>
 							<div class="col-lg-6 form-group">
 								<label asp-for="ComplainantDetails.CountryId"> </label><span class="requiredIcon">*</span>
-								<select asp-for="ComplainantDetails.CountryId" class="form-control" asp-items="ViewBag.Countries"></select>
+								<select asp-for="ComplainantDetails.CountryId" class="form-control" asp-items="ViewBag.Countries">
+									<option value="">Please select country</option>
+								</select>
 								<span asp-validation-for="ComplainantDetails.CountryId" class="text-danger"></span>
 							</div>
 							<div class="col-lg-6  form-group">
@@ -81,8 +86,8 @@
 								<span asp-validation-for="ComplainantDetails.ResidentialAddr" class="text-danger"></span>
 							</div>
 							<div class="col-lg-6 form-group">
-								<label asp-for="ComplainantDetails.PostalAddr"></label><span class="requiredIcon">*</span>
-								<input asp-for="ComplainantDetails.PostalAddr" class="form-control required" placeholder="Enter your postal address"/>
+								<label asp-for="ComplainantDetails.PostalAddr"></label>
+								<input asp-for="ComplainantDetails.PostalAddr" class="form-control" placeholder="Enter your postal address"/>
 								<span asp-validation-for="ComplainantDetails.PostalAddr" class="text-danger"></span>
 							</div>
 							<div class="col-lg-6 form-group">
@@ -102,12 +107,16 @@
 							</div>
 							<div class="col-lg-4 form-group">
 								<label asp-for="ComplaintDetails.HealthFacilityId"></label><span class="requiredIcon">*</span>
-								<select asp-for="ComplaintDetails.HealthFacilityId" class="form-control" asp-items="ViewBag.HealthFacilities" onchange="showOthersInput(this)"></select>
+								<select asp-for="ComplaintDetails.HealthFacilityId" class="form-control" asp-items="ViewBag.HealthFacilities" onchange="showOthersInput(this)">
+									<option value="">Please select health facility</option>
+								</select>
 								<span asp-validation-for="ComplaintDetails.HealthFacilityId" class="text-danger"></span>
 							</div>
 							<div class="col-lg-4 form-group">
 								<label asp-for="ComplaintDetails.ComplaintReasonId"></label><span class="requiredIcon">*</span>
-								<select asp-for="ComplaintDetails.ComplaintReasonId" class="form-control" asp-items="ViewBag.ComplaintReasons"></select>
+								<select asp-for="ComplaintDetails.ComplaintReasonId" class="form-control" asp-items="ViewBag.ComplaintReasons">
+									<option value="">Please select complaint reason</option>
+								</select>
 								<span asp-validation-for="ComplaintDetails.ComplaintReasonId" class="text-danger"></span>
 							</div>
 							<div class="col-12 form-group" id="othersHealthFac">
@@ -179,3 +188,6 @@
 	</div>
 </section>
 
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

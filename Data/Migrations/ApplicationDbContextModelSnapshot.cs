@@ -154,7 +154,6 @@ namespace CMS.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PostalAddr")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -240,10 +239,6 @@ namespace CMS.Data.Migrations
 
                     b.Property<string>("AssignedToId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Comments")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("ComplainantId")
                         .HasColumnType("int");
@@ -562,13 +557,13 @@ namespace CMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 11, 8, 9, 25, 57, 328, DateTimeKind.Local).AddTicks(8469),
+                            CreatedAt = new DateTime(2022, 11, 13, 1, 6, 1, 154, DateTimeKind.Local).AddTicks(4832),
                             Name = "Active"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 11, 8, 9, 25, 57, 328, DateTimeKind.Local).AddTicks(8471),
+                            CreatedAt = new DateTime(2022, 11, 13, 1, 6, 1, 154, DateTimeKind.Local).AddTicks(4834),
                             Name = "Inactive"
                         });
                 });

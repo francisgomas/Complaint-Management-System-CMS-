@@ -38,7 +38,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label asp-for="Comments" class="control-label">@Html.DisplayNameFor(model => model.Comments)</label>
-                            <input class="form-control" asp-for="Comments" value="" required />
+                            <textarea asp-for="Comments" class="form-control required" placeholder="Enter comments"></textarea>
                             <span asp-validation-for="Comments" class="text-danger"></span>
                         </div>
                     </div>
@@ -49,3 +49,7 @@
     </div>
 </div>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -21,10 +21,14 @@
                         <span class="btn-inner--icon"><i class="fas fa-arrow-left"></i></span>
                         <span class="btn-inner--text">Navigate to list</span>
                     </a>
-                    <a asp-controller="ComplaintForms" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-warning btn-round btn-icon">
-                        <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
-                        <span class="btn-inner--text">Assign To</span>
-                    </a>
+
+                    @if (Model.FormStatusId < 3)
+                    {
+                        <a asp-controller="ComplaintForms" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-warning btn-round btn-icon">
+                            <span class="btn-inner--icon"><i class="fas fa-user"></i></span>
+                            <span class="btn-inner--text">Assign To</span>
+                        </a>
+                    }
                 </div>
             </div>
         </div>
@@ -146,19 +150,25 @@
                 </div>
                 <div class="col-md-12 col-lg-4">
                     <div class="form-group">
-                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintReason.Name)</label>
-                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintReason.Name)" readonly />
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.HealthFacilityName)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.HealthFacilityName)" readonly />
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 col-lg-6">
+                 <div class="col-md-12 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintReason.Name)</label>
+                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintReason.Name)" readonly />
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
                     <div class="form-group">
                         <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintFirstTime)</label>
                         <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintFirstTime)" readonly />
                     </div>
                 </div>
-                <div class="col-md-12 col-lg-6">
+                <div class="col-md-12 col-lg-4">
                     <div class="form-group">
                         <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintBehalf)</label>
                         <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintBehalf)" readonly />
@@ -202,14 +212,6 @@
 
     <div class="card mb-4">
         <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label class="control-label">@Html.DisplayNameFor(model => model.Comments)</label>
-                        <input class="form-control" value="@Html.DisplayFor(model => model.Comments)" readonly />
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">

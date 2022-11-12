@@ -45,6 +45,19 @@ namespace CMS.Controllers
         public async Task<IActionResult> Index()
         {
             await GetAllData();
+            var sMessage = TempData["SuccessMessage"];
+            var eMessage = TempData["ErrorMessage"];
+
+            if (sMessage != null)
+            {
+                ViewData["SuccessMessage"] = sMessage;
+            }
+
+            if (eMessage != null)
+            {
+                ViewData["ErrorMessage"] = eMessage;
+            }
+
             return View();
         }
 
@@ -84,7 +97,7 @@ namespace CMS.Controllers
                         var notification = new Notification();
                         notification.ComplaintFormId = checkTrackingId.Id;
                         notification.Description = "Awaiting response from PS";
-                        notification.LongDescription = notification.Description;
+                        notification.LongDescription = complaintForm.Comments;
                         notification.UserId = user.Id;
 
                         _context.Add(notification);
@@ -94,7 +107,7 @@ namespace CMS.Controllers
                     }
                     else
                     {
-                        ViewBag.ErrorMessage = "Your application is still under review by Section Head!";
+                        ViewBag.ErrorMessage = "Your application is either in review/processed/archived/deleted!";
                     }
                 }
                 ModelState.Clear();
@@ -157,7 +170,7 @@ namespace CMS.Controllers
 
                 if (result > 0)
                 {
-                    ViewBag.SuccessMessage = "Tracking Number: " + complaintForm.TrackingId;
+                    TempData["SuccessMessage"] = "Tracking Number: " + complaintForm.TrackingId;
 
                     //send email
                     var emailDetails = new EmailData();
@@ -173,11 +186,11 @@ namespace CMS.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "An unknown error has occured";
+                    TempData["ErrorMessage"] = "An unknown error has occured";
                 }
 
                 ModelState.Clear();
-                return View();
+                return RedirectToAction("Index");
             }
 
             return View(complaintForm);

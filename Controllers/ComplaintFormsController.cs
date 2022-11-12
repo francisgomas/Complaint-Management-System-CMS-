@@ -9,9 +9,11 @@ using CMS.Data;
 using CMS.Models;
 using Microsoft.AspNetCore.Identity;
 using CMS.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CMS.Controllers
 {
+    [Authorize]
     public class ComplaintFormsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -185,7 +187,6 @@ namespace CMS.Controllers
 
                 if (complaintsForm != null)
                 {
-                    complaintsForm.Comments = complaintForm.Comments;
                     if (complaintsForm.FormStatusId == 5)
                     {
                         complaintsForm.FormStatusId = 4;
@@ -212,11 +213,11 @@ namespace CMS.Controllers
                     emailDetails.EmailToName = complaintsForm.ComplainantDetails.FirstName + " " + complaintsForm.ComplainantDetails.LastName;
                     emailDetails.EmailSubject = "Complaint Response - Ministry of Health & Medical Services";
                     emailDetails.EmailBody = "Thank you for your patience. Please find response for your application with tracking number " + complaintsForm.TrackingId
-                        + "<p><strong>" + complaintsForm.Comments + "</strong></p>";
+                        + "<p><strong>" + complaintForm.Comments + "</strong></p>";
                     if (complaintsForm.FormStatusId == 4)
                     {
                         emailDetails.EmailBody = "Thank you for your patience. Please find response from the Permanent Secretary(PS) for your application with tracking number " + complaintsForm.TrackingId
-                                + "<p><strong>" + complaintsForm.Comments + "</strong></p>";
+                                + "<p><strong>" + complaintForm.Comments + "</strong></p>";
                     }
                        
                     await _emailService.SendEmail(emailDetails);
@@ -259,9 +260,15 @@ namespace CMS.Controllers
 
                 if (complaintsForm != null)
                 {
-                    complaintsForm.Comments = complaintForm.Comments;
                     complaintsForm.AssignedToId = complaintForm.AssignedToId;
-                    complaintsForm.FormStatusId = 2;
+                    if (complaintsForm.FormStatusId == 2)
+                    {
+                        complaintsForm.FormStatusId = 1;
+                    }
+                    else
+                    {
+                        complaintsForm.FormStatusId = 2;
+                    }
                     complaintsForm.UpdatedAt = DateTime.Now;
                     _context.Update(complaintsForm);
                     await _context.SaveChangesAsync();

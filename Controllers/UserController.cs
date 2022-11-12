@@ -52,6 +52,12 @@ namespace CMS.Controllers
             return View(user);
         }
 
+        private void GetData()
+        {
+            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name");
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Name", "Name");
+        }
+
         // GET: UserController/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -65,37 +71,41 @@ namespace CMS.Controllers
             {
                 return NotFound();
             }
-            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", user.StatusId);
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", user.RoleId);
+
+            GetData();
             return View(user);
         }
 
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,FirstName,LastName,Email,StatusId,RoleId,CreatedAt,LastUpdatedAt")] ApplicationUser applicationUser)
+        public async Task<IActionResult> Edit(string id, ApplicationUser applicationUser)
         {
             var user = await _userManager.FindByIdAsync(id);
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && user != null)
             {
                 user.FirstName = applicationUser.FirstName;
                 user.LastName = applicationUser.LastName;
                 user.Email = applicationUser.Email;
+                user.UserName = applicationUser.Email;
                 user.StatusId = applicationUser.StatusId;
                 user.RoleId = applicationUser.RoleId;
                 user.CreatedAt = applicationUser.CreatedAt;
                 user.LastUpdatedAt = DateTime.Now;
 
-                var response = await _userManager.UpdateAsync(applicationUser);
+                var currentRoles = await _userManager.GetRolesAsync(user);
+                var response = await _userManager.UpdateAsync(user);
+
                 if (response.Succeeded)
                 {
+                    await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                    await _userManager.AddToRoleAsync(user, user.RoleId);
                     return RedirectToAction(nameof(Index));
                 }
                 return BadRequest();
             }
 
-            ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Name", applicationUser.StatusId);
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", applicationUser.RoleId);
+            GetData();
             return View(applicationUser);
         }
     }

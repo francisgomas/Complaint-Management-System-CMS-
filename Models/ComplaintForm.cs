@@ -32,6 +32,7 @@ namespace CMS.Models
         [NotMapped]
         public string[]? Files { get; set; }
         [StringLength(1000)]
+        [NotMapped]
         public string? Comments { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;

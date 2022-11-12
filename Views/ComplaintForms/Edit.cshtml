@@ -38,7 +38,8 @@
                     <div class="col-md-12 col-lg-4">
                         <div class="form-group">
                             <label asp-for="AssignedToId" class="control-label">Assign To</label>
-                            <select asp-for="AssignedToId" class="form-control" required >
+                            <select asp-for="AssignedToId" class="form-control required">
+                                <option value="">Select section head</option>
                                 @foreach (var item in ViewData["Users"] as IEnumerable<CMS.Models.ApplicationUser>)
                                 {
                                     if (item.Id != Model.AssignedToId)
@@ -65,3 +66,7 @@
     </div>
 </div>
 </div>
+                      
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

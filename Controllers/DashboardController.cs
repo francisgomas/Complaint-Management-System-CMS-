@@ -55,6 +55,7 @@ namespace CMS.Controllers
                                 .Include(c => c.ComplaintForm.ComplainantDetails)
                                 .OrderBy(c => c.StatusId)
                                 .ThenByDescending(c => c.LastUpdatedOn)
+                                .Take(10)
                                 .ToList();
 
             if (!User.IsInRole("Systems Administrator"))
@@ -65,6 +66,7 @@ namespace CMS.Controllers
                                 .Where(c => c.UserId == user.Id)
                                 .OrderBy(c => c.StatusId)
                                 .ThenByDescending(c => c.LastUpdatedOn)
+                                .Take(10)
                                 .ToList();
             }
 
