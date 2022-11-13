@@ -14,6 +14,9 @@ namespace CMS.Models
         public string Description { get; set; }
         [Display(Name = "Long Description")]
         public string LongDescription { get; set; } = string.Empty;
+        [Display(Name = "Duration")]
+        [NotMapped]
+        public string Duration { get; set; } = string.Empty;
         public int? StatusId { get; set; } = 1;
         [ForeignKey(nameof(StatusId))]
         public virtual Status? Status { get; set; } = null;

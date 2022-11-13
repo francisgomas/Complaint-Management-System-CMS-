@@ -70,6 +70,7 @@ namespace CMS.Controllers
                                 .ToList();
             }
 
+
             return View(notifications);
         }
     }

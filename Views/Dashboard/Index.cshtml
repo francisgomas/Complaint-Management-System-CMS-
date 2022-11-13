@@ -160,7 +160,14 @@
             <!-- Card header -->
             <div class="card-header">
               <!-- Title -->
-              <h5 class="h3 mb-0">Latest notifications</h5>
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <h5 class="h3 mb-0">Latest notifications</h5>
+                    </div>
+                    <div class="col-lg-6 col-12" style="text-align: right">
+                        <a asp-controller="Notifications" asp-action="Index" class="btn btn-primary btn-sm">View all</a>
+                    </div>
+                </div>
             </div>
             <!-- Card body -->
             <div class="card-body">
@@ -170,44 +177,25 @@
                         @foreach (var item in Model) {
                              <a asp-controller="Notifications" asp-action="CheckRedirect" asp-route-id="@item.ComplaintFormId">       
                                 <div class="timeline-block">
-                                @{
-                                    var iconColor = "badge-danger";
-                                    if (item.StatusId == 1)
-                                    {
-                                        iconColor = "badge-success";     
-                                    }
-                                }
-                                
-                                <span class="timeline-step @iconColor">
-                                    <i class="ni ni-bell-55"></i>
-                                </span>
-                                <div class="timeline-content">
-                                <div class="d-flex justify-content-between pt-1">
-                                    <div>
-                                        <span class="text-muted text-sm font-weight-bold">@item.Description</span>
-                                    </div>
-                                    <div class="text-right">
-                                        @{
-                                            var diff = (DateTime.Now - @item.CreatedOn);
-                                            var msg = "";
-                                            if (diff.Days >= 1){
-                                                msg = diff.Days + " days";
-                                            }
-                                            else if(diff.Hours >= 1){
-                                                msg = diff.Hours + " hrs";
-                                            }
-                                            else if(diff.Minutes >= 1)
-                                            {
-                                                msg = diff.Minutes + " mins";
-                                            }
-                                            else
-                                            {
-                                                msg = diff.Seconds + " secs";
-                                            }
+                                    @{
+                                        var iconColor = "badge-danger";
+                                        if (item.StatusId == 1)
+                                        {
+                                            iconColor = "badge-success";     
                                         }
-                                        <small class="text-muted"><i class="fas fa-clock mr-1"></i>@msg</small>
+                                    }
+                                    <span class="timeline-step @iconColor">
+                                        <i class="ni ni-bell-55"></i>
+                                    </span>
+                                    <div class="timeline-content">
+                                        <div class="d-flex justify-content-between pt-1">
+                                            <div>
+                                                <span class="text-muted text-sm font-weight-bold">@item.Description</span>
+                                            </div>
+                                            <div class="text-right">
+                                                <small class="text-muted"><i class="fas fa-clock mr-1"></i>@GetDuration(item.CreatedOn)</small>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                             </a>
@@ -233,7 +221,34 @@
     </div>
   </div>
 
-  <script>
+ @functions{
+     private static String GetDuration(DateTime createdon)
+     {
+        var diff = (DateTime.Now - createdon);
+        var msg = "";
+        if (diff.Days >= 1)
+        {
+            msg = diff.Days + " days";
+        }
+        else if (diff.Hours >= 1)
+        {
+            msg = diff.Hours + " hrs";
+        }
+        else if (diff.Minutes >= 1)
+        {
+            msg = diff.Minutes + " mins";
+        }
+        else
+        {
+            msg = diff.Seconds + " secs";
+        }
+        return msg;
+    }
+ }
+    
+@{ await Html.RenderPartialAsync("_ChartScript"); }
+
+<script>
     var barCanvas = document.getElementById("barchart");
 
     var CustomerServiceHead = [];
@@ -290,7 +305,8 @@
                     beginAtZero: true
                 }
             }],
-        }
+        },
+        maintainAspectRatio: false,
     };
 
     var barChart = new Chart(barCanvas, {
@@ -298,5 +314,4 @@
         data: datasetvalues,
         options: chartOptions
     });
-  </script>
-
+</script>

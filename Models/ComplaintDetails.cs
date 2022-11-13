@@ -14,6 +14,18 @@ namespace CMS.Models
         public int? HealthFacilityId { get; set; }
         [ForeignKey(nameof(HealthFacilityId))]
         public virtual HealthFacility? HealthFacility { get; set; } = null;
+        [Display(Name = "Hospital")]
+        public int? HospitalId { get; set; }
+        [ForeignKey(nameof(HospitalId))]
+        public virtual Hospital? Hospital { get; set; } = null;
+        [Display(Name = "Health Center")]
+        public int? HealthCenterId { get; set; }
+        [ForeignKey(nameof(HealthCenterId))]
+        public virtual HealthCenter? HealthCenter { get; set; } = null;
+        [Display(Name = "Nursing Station")]
+        public int? NursingStationId { get; set; }
+        [ForeignKey(nameof(NursingStationId))]
+        public virtual NursingStation? NursingStation { get; set; } = null;
         [Required]
         [Display(Name = "Complaint Reason")]
         public int ComplaintReasonId { get; set; }

@@ -1,0 +1,199 @@
+﻿@model CMS.Models.Report
+
+@{
+    ViewData["Title"] = "Report";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<partial name="_Aside" />
+<div class="main-content" id="panel">
+<partial name="_Navbar" />
+
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt--6">
+    <div class="card mb-4">
+        <!-- Card body -->
+        <div class="card-body">
+            <!-- Form groups used in grid --> 
+             <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="chart">
+                        <canvas id="piechart" class="chart-canvas"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                     <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="HospitalCount" class="form-control-label"></label>
+                            <input asp-for="HospitalCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                    <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="NursingStationCount" class="form-control-label"></label>
+                            <input asp-for="NursingStationCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                     <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="HealthCenterCount" class="form-control-label"></label>
+                            <input asp-for="HealthCenterCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                </div>
+                <div class="row">
+                     <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="OthersCount" class="form-control-label"></label>
+                            <input asp-for="OthersCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                     <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="TotalCount" class="form-control-label"></label>
+                            <input asp-for="TotalCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                    <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="CreatedCount" class="form-control-label"></label>
+                            <input asp-for="CreatedCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="InProcessingCount" class="form-control-label"></label>
+                            <input asp-for="InProcessingCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                     <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="ReviewedCount" class="form-control-label"></label>
+                            <input asp-for="ReviewedCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                    <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="AwaitingPSCount" class="form-control-label"></label>
+                            <input asp-for="AwaitingPSCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                </div>
+                <div class="row">
+                     <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="ProcessedCount" class="form-control-label"></label>
+                            <input asp-for="ProcessedCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                     <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="ArchivedCount" class="form-control-label"></label>
+                            <input asp-for="ArchivedCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                     <div class="col-lg-4 col-sm-12">
+                         <div class="form-group">
+                            <label asp-for="DeletedCount" class="form-control-label"></label>
+                            <input asp-for="DeletedCount" class="form-control" readonly />
+                         </div>
+                     </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+                         
+
+@{ await Html.RenderPartialAsync("_ChartScript"); }
+
+<script>
+    var pieChartCanvas = document.getElementById("piechart");
+
+    var Hospital = [];
+    var HealthCenter = [];
+    var NursingStation = [];
+    var Others = [];
+
+    @{
+        for (int i = 0; i < 7; i++) {
+           // @:CustomerServiceHead.push(@ViewBag.Customerhead[i]);
+           // @:SectionHead.push(@ViewBag.Sectionhead[i]);
+           // @:PS.push(@ViewBag.PS[i]);
+        }
+    }
+    
+    var CustomerServiceHead = {
+        label: 'Hospital',
+        data: Hospital,
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderWidth: 0,  
+        lineTension: 0
+    };
+
+    var SectionHead = {
+        label: 'Health Center',
+        data: SectionHead,
+        backgroundColor: 'rgb(54, 162, 235)',
+        borderWidth: 0,  
+        lineTension: 0
+    };
+
+    var PS = {
+        label: 'Nursing Station',
+        data: PS,
+        backgroundColor: 'rgb(157, 230, 41)',
+        borderWidth: 0,  
+        lineTension: 0
+    };
+
+    var PS = {
+        label: 'Others',
+        data: PS,
+        backgroundColor: 'rgb(157, 230, 41)',
+        borderWidth: 0,  
+        lineTension: 0
+    };
+
+    var datasetvalues = {
+        labels: ["Hospital", "Health Center", "Nursing Station", "Others"],
+        datasets: [CustomerServiceHead, SectionHead, PS]
+    }
+
+    var chartOptions = {
+        scales: {
+            xAxes: [{
+                barPercentage: 1,
+                categoryPercentage: 0.6,
+            }],
+            yAxes: [{
+                barPecentage: 1,
+                categoryPercentage: 0.6,
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+        },
+        maintainAspectRatio: false,
+    };
+
+    var pieChartCanvas = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: datasetvalues,
+        options: chartOptions
+    });
+</script>

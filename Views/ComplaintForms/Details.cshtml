@@ -17,7 +17,7 @@
                     <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
-                    <a asp-controller="ComplaintForms" asp-action="Index" asp-route-id="1" class="btn btn-sm btn-success btn-round btn-icon">
+                    <a asp-controller="ComplaintForms" asp-action="Index" asp-route-id="@Model.FormStatusId" class="btn btn-sm btn-success btn-round btn-icon">
                         <span class="btn-inner--icon"><i class="fas fa-arrow-left"></i></span>
                         <span class="btn-inner--text">Navigate to list</span>
                     </a>
@@ -150,47 +150,85 @@
                 </div>
                 <div class="col-md-12 col-lg-4">
                     <div class="form-group">
-                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.HealthFacilityName)</label>
-                        <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.HealthFacilityName)" readonly />
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                 <div class="col-md-12 col-lg-4">
-                    <div class="form-group">
                         <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintReason.Name)</label>
                         <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintReason.Name)" readonly />
                     </div>
                 </div>
-                <div class="col-md-12 col-lg-4">
+            </div>
+            <div class="row">
+                @if (Model.ComplaintDetails.HealthFacilityId == 5)
+                {
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.Hospital.Name)</label>
+                            <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.Hospital.Name)" readonly />
+                        </div>
+                    </div> 
+                }
+                else if (Model.ComplaintDetails.HealthFacilityId == 6)
+                {
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.HealthCenter.Name)</label>
+                            <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.HealthCenter.Name)" readonly />
+                        </div>
+                    </div> 
+                }
+                else if (Model.ComplaintDetails.HealthFacilityId == 7)
+                {
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.NursingStation.Name)</label>
+                            <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.NursingStation.Name)" readonly />
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.HealthFacilityName)</label>
+                            <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.HealthFacilityName)" readonly />
+                        </div>
+                    </div>    
+                }
+
+                <div class="col-md-12 col-lg-6">
                     <div class="form-group">
                         <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintFirstTime)</label>
                         <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintFirstTime)" readonly />
                     </div>
                 </div>
-                <div class="col-md-12 col-lg-4">
+                <div class="col-md-12 col-lg-6">
                     <div class="form-group">
                         <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintBehalf)</label>
                         <input class="form-control" value="@Html.DisplayFor(model => model.ComplaintDetails.ComplaintBehalf)" readonly />
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintFirstTimeReason)</label>
-                        <textarea class="form-control" readonly >@Html.DisplayFor(model => model.ComplaintDetails.ComplaintFirstTimeReason)</textarea>
+            @if (Model.ComplaintDetails.ComplaintFirstTime != "Yes")
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintFirstTimeReason)</label>
+                            <textarea class="form-control" readonly >@Html.DisplayFor(model => model.ComplaintDetails.ComplaintFirstTimeReason)</textarea>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintBehalfReason)</label>
-                        <textarea class="form-control" readonly >@Html.DisplayFor(model => model.ComplaintDetails.ComplaintBehalfReason)</textarea>
+                </div>  
+            }
+            @if (Model.ComplaintDetails.ComplaintBehalfReason != "No")
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="control-label">@Html.DisplayNameFor(model => model.ComplaintDetails.ComplaintBehalfReason)</label>
+                            <textarea class="form-control" readonly >@Html.DisplayFor(model => model.ComplaintDetails.ComplaintBehalfReason)</textarea>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div>  
+            }
+           
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
@@ -210,13 +248,13 @@
         </div>
     </div>
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        @if (Model.FileName != "")
-                        {
+    @if (Model.FileName != "")
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
                             @foreach(var link in Model.Files)
                             {
                                 if (link != "" || link != string.Empty)
@@ -226,11 +264,11 @@
                                     </a>
                                 }
                             }
-                        }
+                        </div>
                     </div>
-                </div>
-            </div> 
+                </div> 
+            </div>
         </div>
-    </div>
+    }
 </div>
 </div>

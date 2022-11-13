@@ -95,7 +95,7 @@
 .requiredIcon {
 	color: red;
 }
-#othersHealthFac, #firstTimeReason, #behalfReason {
+#othersHealthFac, #firstTimeReason, #behalfReason, #hospitalFac, #healthCenterFac, #nursingStationFac {
 	display: none;
 }
 /* ----------------------------------------------------------------

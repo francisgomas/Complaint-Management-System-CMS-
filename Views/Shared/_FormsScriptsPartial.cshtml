@@ -10,10 +10,32 @@
 <script type="text/javascript">
 	//Health Facility - COMPLAINT DETAILS
 	function showOthersInput(select){
-	   if(select.value==8){
-		document.getElementById('othersHealthFac').style.display = "block";
-	   } else{
-		document.getElementById('othersHealthFac').style.display = "none";
+	   if(select.value==5){
+			document.getElementById('hospitalFac').style.display = "block";
+
+			document.getElementById('healthCenterFac').style.display = "none";
+			document.getElementById('nursingStationFac').style.display = "none";
+			document.getElementById('othersHealthFac').style.display = "none";
+	   } else if(select.value==6){
+			document.getElementById('healthCenterFac').style.display = "block";
+
+			document.getElementById('hospitalFac').style.display = "none";
+			document.getElementById('nursingStationFac').style.display = "none";
+			document.getElementById('othersHealthFac').style.display = "none";
+	   }
+	   else if(select.value==7){
+			document.getElementById('nursingStationFac').style.display = "block";
+
+			document.getElementById('hospitalFac').style.display = "none";
+			document.getElementById('healthCenterFac').style.display = "none";
+			document.getElementById('othersHealthFac').style.display = "none";
+	   }
+	   else {
+		   document.getElementById('othersHealthFac').style.display = "block";
+
+		   document.getElementById('hospitalFac').style.display = "none";
+			document.getElementById('healthCenterFac').style.display = "none";
+			document.getElementById('nursingStationFac').style.display = "none";
 	   }
 	} 
 

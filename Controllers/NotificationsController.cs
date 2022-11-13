@@ -1,5 +1,7 @@
 ﻿using CMS.Data;
+using CMS.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +11,36 @@ namespace CMS.Controllers
     public class NotificationsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public NotificationsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public NotificationsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var applicationDbContext = await _context.Notification.Include(h => h.Status)
+                                            .Include(h => h.ComplaintForm)
+                                            .Include(h => h.ApplicationUser)
+                                            .OrderBy(c => c.StatusId)
+                                            .ThenByDescending(c => c.LastUpdatedOn)
+                                            .ToListAsync();
+
+            if (!User.IsInRole("Systems Administrator"))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                applicationDbContext = await _context.Notification.Include(h => h.Status)
+                                            .Include(h => h.ComplaintForm)
+                                            .Include(h => h.ApplicationUser)
+                                            .Where(c => c.UserId == user.Id)
+                                            .OrderBy(c => c.StatusId)
+                                            .ThenByDescending(c => c.LastUpdatedOn)
+                                            .ToListAsync();
+            }
+                                            
+            return View(applicationDbContext);
         }
 
         [HttpGet]

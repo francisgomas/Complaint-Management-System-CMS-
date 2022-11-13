@@ -16,17 +16,17 @@
 						@{
 							  if(ViewBag.SuccessMessage != null)
 							  {
-									<div class="alert alert-dismissible alert-success">
-										Form submitted successfully! <strong>@ViewBag.SuccessMessage</strong>.
-										<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-hidden="true"></button>
-									</div>
+										<div class="alert alert-dismissible alert-success">
+											Form submitted successfully! <strong>@ViewBag.SuccessMessage</strong>.
+											<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-hidden="true"></button>
+										</div>
 							  }
 							  if(ViewBag.ErrorMessage != null)
 							  {
-									<div class="alert alert-dismissible alert-danger">
-										Error! <strong>@ViewBag.ErrorMessage</strong>.
-										<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-hidden="true"></button>
-									</div>
+										<div class="alert alert-dismissible alert-danger">
+											Error! <strong>@ViewBag.ErrorMessage</strong>.
+											<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-hidden="true"></button>
+										</div>
 							  }
 						}
 
@@ -114,10 +114,31 @@
 							</div>
 							<div class="col-lg-4 form-group">
 								<label asp-for="ComplaintDetails.ComplaintReasonId"></label><span class="requiredIcon">*</span>
-								<select asp-for="ComplaintDetails.ComplaintReasonId" class="form-control" asp-items="ViewBag.ComplaintReasons">
+								<select asp-for="ComplaintDetails.ComplaintReasonId" class="form-control required" asp-items="ViewBag.ComplaintReasons">
 									<option value="">Please select complaint reason</option>
 								</select>
 								<span asp-validation-for="ComplaintDetails.ComplaintReasonId" class="text-danger"></span>
+							</div>
+							<div class="col-12 form-group" id="hospitalFac">
+								<label asp-for="ComplaintDetails.HospitalId"></label><span class="requiredIcon">*</span>
+								<select asp-for="ComplaintDetails.HospitalId" class="form-control required" asp-items="ViewBag.Hospitals">
+									<option value="">Please select hospital</option>
+								</select>
+								<span asp-validation-for="ComplaintDetails.HospitalId" class="text-danger"></span>
+							</div>
+							<div class="col-12 form-group" id="healthCenterFac">
+								<label asp-for="ComplaintDetails.HealthCenterId"></label><span class="requiredIcon">*</span>
+								<select asp-for="ComplaintDetails.HealthCenterId" class="form-control required" asp-items="ViewBag.HealthCenters">
+									<option value="">Please select health center</option>
+								</select>
+								<span asp-validation-for="ComplaintDetails.HealthCenterId" class="text-danger"></span>
+							</div>
+							<div class="col-12 form-group" id="nursingStationFac">
+								<label asp-for="ComplaintDetails.NursingStationId"></label><span class="requiredIcon">*</span>
+								<select asp-for="ComplaintDetails.NursingStationId" class="form-control required" asp-items="ViewBag.NursingStations">
+									<option value="">Please select nursing station</option>
+								</select>
+								<span asp-validation-for="ComplaintDetails.NursingStationId" class="text-danger"></span>
 							</div>
 							<div class="col-12 form-group" id="othersHealthFac">
 								<label asp-for="ComplaintDetails.HealthFacilityName"></label><span class="requiredIcon">*</span>

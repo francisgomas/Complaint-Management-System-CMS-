@@ -211,12 +211,21 @@ namespace CMS.Data.Migrations
                     b.Property<DateTime>("DateofIncident")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("HealthCenterId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("HealthFacilityId")
                         .HasColumnType("int");
 
                     b.Property<string>("HealthFacilityName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("HospitalId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NursingStationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Remedy")
                         .HasMaxLength(1000)
@@ -226,7 +235,13 @@ namespace CMS.Data.Migrations
 
                     b.HasIndex("ComplaintReasonId");
 
+                    b.HasIndex("HealthCenterId");
+
                     b.HasIndex("HealthFacilityId");
+
+                    b.HasIndex("HospitalId");
+
+                    b.HasIndex("NursingStationId");
 
                     b.ToTable("ComplaintDetails");
                 });
@@ -557,13 +572,13 @@ namespace CMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2022, 11, 13, 1, 6, 1, 154, DateTimeKind.Local).AddTicks(4832),
+                            CreatedAt = new DateTime(2022, 11, 13, 15, 33, 21, 596, DateTimeKind.Local).AddTicks(5588),
                             Name = "Active"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2022, 11, 13, 1, 6, 1, 154, DateTimeKind.Local).AddTicks(4834),
+                            CreatedAt = new DateTime(2022, 11, 13, 15, 33, 21, 596, DateTimeKind.Local).AddTicks(5592),
                             Name = "Inactive"
                         });
                 });
@@ -739,13 +754,31 @@ namespace CMS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CMS.Models.HealthCenter", "HealthCenter")
+                        .WithMany()
+                        .HasForeignKey("HealthCenterId");
+
                     b.HasOne("CMS.Models.HealthFacility", "HealthFacility")
                         .WithMany()
                         .HasForeignKey("HealthFacilityId");
 
+                    b.HasOne("CMS.Models.Hospital", "Hospital")
+                        .WithMany()
+                        .HasForeignKey("HospitalId");
+
+                    b.HasOne("CMS.Models.NursingStation", "NursingStation")
+                        .WithMany()
+                        .HasForeignKey("NursingStationId");
+
                     b.Navigation("ComplaintReason");
 
+                    b.Navigation("HealthCenter");
+
                     b.Navigation("HealthFacility");
+
+                    b.Navigation("Hospital");
+
+                    b.Navigation("NursingStation");
                 });
 
             modelBuilder.Entity("CMS.Models.ComplaintForm", b =>

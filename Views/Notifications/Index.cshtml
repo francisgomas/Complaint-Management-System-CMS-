@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CMS.Models.Notification>
+
+@{
+    ViewData["Title"] = "All Notifications";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+
+<partial name="_Aside" />
+<div class="main-content" id="panel">
+<partial name="_Navbar" />
+
+<div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-12">
+                        <h6 class="h2 text-white d-inline-block mb-0">@ViewData["Title"]</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <!-- Table -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <h3 class="mb-0">@ViewData["Title"]</h3>
+                </div>
+                <div class="table-responsive py-4">
+                    <table class="table table-flush" id="datatable-basic">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.ComplaintForm.TrackingId)</th>
+                            <th>@Html.DisplayNameFor(model => model.Description)</th>
+                            <th>@Html.DisplayNameFor(model => model.LongDescription)</th>
+                            <th>Assigned To</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.ComplaintForm.TrackingId)</th>
+                            <th>@Html.DisplayNameFor(model => model.Description)</th>
+                            <th>@Html.DisplayNameFor(model => model.LongDescription)</th>
+                            <th>Assigned To</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model) {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.ComplaintForm.TrackingId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td>@Html.DisplayFor(modelItem => item.LongDescription)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ApplicationUser.Email)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
