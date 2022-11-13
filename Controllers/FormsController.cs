@@ -133,6 +133,7 @@ namespace CMS.Controllers
             var notification = new Notification();
             notification.ComplaintFormId = id;
             notification.Description = desc;
+            notification.LongDescription = desc;
             notification.UserId = userid;
 
             _context.Add(notification);

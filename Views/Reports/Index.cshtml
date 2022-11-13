@@ -25,12 +25,30 @@
     <div class="card mb-4">
         <!-- Card body -->
         <div class="card-body">
-            <!-- Form groups used in grid --> 
-             <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="row">
-                    <div class="chart">
-                        <canvas id="piechart" class="chart-canvas"></canvas>
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="form-group">
+                            <h3>Categorized by hospitals</h3>
+                            <div class="chart">
+                                <canvas id="hospital-piechart" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="form-group">
+                            <h3>Categorized by health center</h3>
+                            <div class="chart">
+                                <canvas id="healthcenter-piechart" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                        <div class="form-group">
+                            <h3>Categorized by nursing station</h3>
+                            <div class="chart">
+                                <canvas id="nursingstation-piechart" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -113,87 +131,109 @@
                          </div>
                      </div>
                 </div>
-            </form>
         </div>
     </div>
-</div>
-                         
+</div>              
 
-@{ await Html.RenderPartialAsync("_ChartScript"); }
+@{
+    await Html.RenderPartialAsync("_ChartScript");
+}
 
 <script>
-    var pieChartCanvas = document.getElementById("piechart");
-
     var Hospital = [];
+    var HospitalNames = [];
     var HealthCenter = [];
+    var HealthCenterNames = [];
     var NursingStation = [];
-    var Others = [];
+    var NursingStationNames = [];
 
     @{
-        for (int i = 0; i < 7; i++) {
-           // @:CustomerServiceHead.push(@ViewBag.Customerhead[i]);
-           // @:SectionHead.push(@ViewBag.Sectionhead[i]);
-           // @:PS.push(@ViewBag.PS[i]);
+        if (@ViewBag.HospitalCounts.Count > 0)
+        {
+            foreach(var item in @ViewBag.HospitalCounts) {
+                @:Hospital.push(@item);
+            }
+            foreach(var item in @ViewBag.HospitalNames) {
+                @:HospitalNames.push("@item.Hospital.Name");
+            }
+        }
+
+        if (@ViewBag.HealthCenterCount.Count > 0)
+        {
+             foreach(var item in @ViewBag.HealthCenterCount) {
+                @:HealthCenter.push(@item);
+            }
+            foreach(var item in @ViewBag.HealthCenterNames) {
+                @:HealthCenterNames.push("@item.HealthCenter.Name");
+            }   
+        }
+
+        if (@ViewBag.NursingStationCount.Count > 0)
+        {
+            foreach (var item in @ViewBag.NursingStationCount)
+            {
+                @:NursingStation.push(@item);
+            }
+            foreach (var item in @ViewBag.NursingStationNames)
+            {
+                @:NursingStationNames.push("@item.NursingStation.Name");
+            }
         }
     }
-    
-    var CustomerServiceHead = {
-        label: 'Hospital',
-        data: Hospital,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderWidth: 0,  
-        lineTension: 0
-    };
 
-    var SectionHead = {
-        label: 'Health Center',
-        data: SectionHead,
-        backgroundColor: 'rgb(54, 162, 235)',
-        borderWidth: 0,  
-        lineTension: 0
-    };
+    const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+    const randomRGB = () => `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
 
-    var PS = {
-        label: 'Nursing Station',
-        data: PS,
-        backgroundColor: 'rgb(157, 230, 41)',
-        borderWidth: 0,  
-        lineTension: 0
-    };
-
-    var PS = {
-        label: 'Others',
-        data: PS,
-        backgroundColor: 'rgb(157, 230, 41)',
-        borderWidth: 0,  
-        lineTension: 0
-    };
-
-    var datasetvalues = {
-        labels: ["Hospital", "Health Center", "Nursing Station", "Others"],
-        datasets: [CustomerServiceHead, SectionHead, PS]
+    const options = {
+      type: 'pie',
+      data: {
+        labels: [HospitalNames],
+        datasets: [{
+          label: "Hospital",
+          data: [Hospital],
+          backgroundColor: () => (randomRGB())
+        }]
+      },
+      options: {
+        maintainAspectRatio: false
+      }
     }
 
-    var chartOptions = {
-        scales: {
-            xAxes: [{
-                barPercentage: 1,
-                categoryPercentage: 0.6,
-            }],
-            yAxes: [{
-                barPecentage: 1,
-                categoryPercentage: 0.6,
-                ticks: {
-                    beginAtZero: true
-                }
-            }],
-        },
-        maintainAspectRatio: false,
-    };
+    const options2 = {
+      type: 'pie',
+      data: {
+        labels: [HealthCenterNames],
+        datasets: [{
+          label: 'Health Center',
+          data: [HealthCenter],
+          backgroundColor: () => (randomRGB())
+        }]
+      },
+      options: {
+        maintainAspectRatio: false
+      }
+    }
 
-    var pieChartCanvas = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: datasetvalues,
-        options: chartOptions
-    });
+     const options3 = {
+      type: 'pie',
+      data: {
+        labels: [NursingStationNames],
+        datasets: [{
+          label: 'Nursing Station',
+          data: [NursingStation],
+          backgroundColor: () => (randomRGB())
+        }]
+      },
+      options: {
+        maintainAspectRatio: false
+      }
+    }
+
+    const ctx = document.getElementById('hospital-piechart').getContext('2d');
+    const ctx2 = document.getElementById('healthcenter-piechart').getContext('2d');
+    const ctx3 = document.getElementById('nursingstation-piechart').getContext('2d');
+
+    new Chart(ctx, options);
+    new Chart(ctx2, options2);
+    new Chart(ctx3, options3);
 </script>

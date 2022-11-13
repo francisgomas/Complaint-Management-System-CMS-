@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CMS.Models
 {
@@ -28,5 +29,13 @@ namespace CMS.Models
         public int ArchivedCount { get; set; } = 0;
         [Display(Name = "Total number of complaints in deleted status")]
         public int DeletedCount { get; set; } = 0;
+
+
+
+
+        [Display(Name = "Complaint Form")]
+        public int ComplaintFormId { get; set; }
+        [ForeignKey(nameof(ComplaintFormId))]
+        public virtual ComplaintForm? ComplaintForm { get; set; } = null;
     }
 }

@@ -39,12 +39,12 @@ namespace CMS.Controllers
                                             .ThenByDescending(c => c.LastUpdatedOn)
                                             .ToListAsync();
             }
-                                            
+
             return View(applicationDbContext);
         }
 
         [HttpGet]
-        public async Task<IActionResult> CheckRedirect(Guid? id)
+        public async Task<IActionResult> CheckRedirect(int? id)
         {
             if (id == null || _context.Notification == null)
             {
@@ -53,10 +53,7 @@ namespace CMS.Controllers
 
             var notification = await _context.Notification
                 .Include(c => c.ComplaintForm)
-                .Include(c => c.ApplicationUser)
-                .Include(c => c.Status)
-                .Where(c => c.StatusId == 1)
-                .FirstOrDefaultAsync(m => m.ComplaintFormId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (notification != null)
             {
@@ -65,7 +62,7 @@ namespace CMS.Controllers
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("Details", "ComplaintForms", new { id = id });
+            return RedirectToAction("Details", "ComplaintForms", new { id = notification.ComplaintFormId });
         }
     }
 }
