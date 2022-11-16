@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TG7yI9vc018nowPf3POTIC1mK6uY0o3lVGBVWanfPzg=",
+  "Hash": "06lD+LbZfA6zSOKdsnjYO+fn4KmQWVFU2IgEF4nu9xM=",
   "Source": "CMS",
   "BasePath": "_content/CMS",
   "Mode": "Default",
@@ -29102,6 +29102,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\21172638.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\29881b86-e0f2-49e0-b30d-1dd302199d88.pdf",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "uploads/29881b86-e0f2-49e0-b30d-1dd302199d88.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\29881b86-e0f2-49e0-b30d-1dd302199d88.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\366a1b99-5981-42cd-9e50-c83f8e0c10e2.pdf",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "uploads/366a1b99-5981-42cd-9e50-c83f8e0c10e2.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\366a1b99-5981-42cd-9e50-c83f8e0c10e2.pdf"
     },
     {
       "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\39cd7395-6401-43f0-9bde-2fcea063c196.jpg",

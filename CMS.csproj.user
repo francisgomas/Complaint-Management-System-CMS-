@@ -15,6 +15,6 @@
     <WebStackScaffolding_DbContextTypeFullName>CMS.Data.ApplicationDbContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
-    <NameOfLastUsedPublishProfile>C:\Users\Gomas\Documents\Projects\NET_Core\CMS\Properties\PublishProfiles\roneel-001-site1 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\Gomas\Documents\Projects\NET_Core\CMS\Properties\PublishProfiles\cmsproj2022 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

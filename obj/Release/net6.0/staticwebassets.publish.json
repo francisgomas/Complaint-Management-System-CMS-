@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TwMZSgRJNxnXnWqTgr4f3VnO9ecTJbkdOhmq1vdXNiY=",
+  "Hash": "iBzxAd1U3kw3op0BMuK30F7mZAi+OtZtSccX09hKysQ=",
   "Source": "CMS",
   "BasePath": "_content/CMS",
   "Mode": "Default",
@@ -29104,6 +29104,40 @@
       "OriginalItemSpec": "wwwroot\\uploads\\21172638.jpg"
     },
     {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\29881b86-e0f2-49e0-b30d-1dd302199d88.pdf",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "uploads/29881b86-e0f2-49e0-b30d-1dd302199d88.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\29881b86-e0f2-49e0-b30d-1dd302199d88.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\366a1b99-5981-42cd-9e50-c83f8e0c10e2.pdf",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "uploads/366a1b99-5981-42cd-9e50-c83f8e0c10e2.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\366a1b99-5981-42cd-9e50-c83f8e0c10e2.pdf"
+    },
+    {
       "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\39cd7395-6401-43f0-9bde-2fcea063c196.jpg",
       "SourceId": "CMS",
       "SourceType": "Discovered",
@@ -29170,6 +29204,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\69e1e957-1eb9-4cd3-9468-687ba980c7d5.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\6e3f070c-4cff-41af-826a-77f1fd37280c.pdf",
+      "SourceId": "CMS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\",
+      "BasePath": "_content/CMS",
+      "RelativePath": "uploads/6e3f070c-4cff-41af-826a-77f1fd37280c.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\6e3f070c-4cff-41af-826a-77f1fd37280c.pdf"
     },
     {
       "Identity": "C:\\Users\\Gomas\\Documents\\Projects\\NET_Core\\CMS\\wwwroot\\uploads\\95ceb625-1bfa-4a64-b300-13a6124884e8.jfif",

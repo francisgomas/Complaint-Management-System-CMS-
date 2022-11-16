@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label asp-for="AssignedToId" class="control-label">Assign To</label>
                             <select asp-for="AssignedToId" class="form-control required">
-                                <option value="">Select section head</option>
+                                <option value="">Select user</option>
                                 @foreach (var item in ViewData["Users"] as IEnumerable<CMS.Models.ApplicationUser>)
                                 {
                                     if (item.Id != Model.AssignedToId)

@@ -209,6 +209,17 @@ namespace CMS.Controllers
                     .FirstOrDefaultAsync(a => a.TrackingId == applicationTracking.TrackingId);
                 if (form != null)
                 {
+                    if (form.FormStatusId == 3 || form.FormStatusId == 4)
+                    {
+                        var notification = await _context.Notification.Where(x => x.ComplaintFormId == form.Id).OrderByDescending(x => x.Id).FirstOrDefaultAsync();
+                        return Json(new
+                        {
+                            message = "Complaint Form is in " + form.FormStatus.FormStatusName + " status. Last updated on " + form.UpdatedAt +
+                                    "<br/><br/>Feedback: " + notification.LongDescription,
+                            result = true,
+                            status = form.FormStatusId
+                        });
+                    }
                     return Json(new
                     {
                         message = "Complaint Form is in " + form.FormStatus.FormStatusName + " status. Last updated on " + form.UpdatedAt,

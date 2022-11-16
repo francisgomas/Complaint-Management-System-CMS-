@@ -223,7 +223,7 @@ namespace CMS.Controllers
                     await _emailService.SendEmail(emailDetails);
                 }
 
-                return RedirectToAction("Index", new { id = 1 });
+                return RedirectToAction("Index", new { id = complaintsForm.FormStatusId });
             }
 
             GetUsers();

@@ -1,7 +1,7 @@
 ﻿@model CMS.Models.Report
 
 @{
-    ViewData["Title"] = "Report";
+    ViewData["Title"] = "Reports";
     Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
@@ -151,7 +151,7 @@
         if (@ViewBag.HospitalCounts.Count > 0)
         {
             foreach(var item in @ViewBag.HospitalCounts) {
-                @:Hospital.push(@item);
+                @:Hospital.push("@item");
             }
             foreach(var item in @ViewBag.HospitalNames) {
                 @:HospitalNames.push("@item.Hospital.Name");
@@ -161,7 +161,7 @@
         if (@ViewBag.HealthCenterCount.Count > 0)
         {
              foreach(var item in @ViewBag.HealthCenterCount) {
-                @:HealthCenter.push(@item);
+                @:HealthCenter.push("@item");
             }
             foreach(var item in @ViewBag.HealthCenterNames) {
                 @:HealthCenterNames.push("@item.HealthCenter.Name");
@@ -172,7 +172,7 @@
         {
             foreach (var item in @ViewBag.NursingStationCount)
             {
-                @:NursingStation.push(@item);
+                @:NursingStation.push("@item");
             }
             foreach (var item in @ViewBag.NursingStationNames)
             {
@@ -187,10 +187,10 @@
     const options = {
       type: 'pie',
       data: {
-        labels: [HospitalNames],
+        labels: HospitalNames,
         datasets: [{
           label: "Hospital",
-          data: [Hospital],
+          data: Hospital,
           backgroundColor: () => (randomRGB())
         }]
       },
@@ -202,10 +202,10 @@
     const options2 = {
       type: 'pie',
       data: {
-        labels: [HealthCenterNames],
+        labels: HealthCenterNames,
         datasets: [{
           label: 'Health Center',
-          data: [HealthCenter],
+          data: HealthCenter,
           backgroundColor: () => (randomRGB())
         }]
       },
@@ -217,10 +217,10 @@
      const options3 = {
       type: 'pie',
       data: {
-        labels: [NursingStationNames],
+        labels: NursingStationNames,
         datasets: [{
           label: 'Nursing Station',
-          data: [NursingStation],
+          data: NursingStation,
           backgroundColor: () => (randomRGB())
         }]
       },

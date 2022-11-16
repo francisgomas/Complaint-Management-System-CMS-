@@ -2,6 +2,8 @@
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using System.Net;
+using System.Net.Mail;
 
 namespace CMS.Services
 {
@@ -15,28 +17,25 @@ namespace CMS.Services
 
         public async Task SendEmail(EmailData emailData)
         {
-            try
+            string fromMail = _emailSettings.EmailId;
+            string fromPassword = _emailSettings.Password;
+            string toMail = emailData.EmailToId;
+
+            MailMessage message = new MailMessage();
+            message.From = new MailAddress(fromMail);
+            message.Subject = emailData.EmailSubject;
+            message.To.Add(new MailAddress(toMail));
+            message.Body = emailData.EmailBody;
+            message.IsBodyHtml = true;
+
+            var smtpClient = new System.Net.Mail.SmtpClient(_emailSettings.Host)
             {
-                MimeMessage emailMessage = new MimeMessage();
-                MailboxAddress emailFrom = new MailboxAddress(_emailSettings.Name, _emailSettings.EmailId);
-                emailMessage.From.Add(emailFrom);
-                MailboxAddress emailTo = new MailboxAddress(emailData.EmailToName, emailData.EmailToId);
-                emailMessage.To.Add(emailTo);
-                emailMessage.Subject = emailData.EmailSubject;
-                BodyBuilder emailBodyBuilder = new BodyBuilder();
-                emailBodyBuilder.HtmlBody = emailData.EmailBody;
-                emailMessage.Body = emailBodyBuilder.ToMessageBody();
-                SmtpClient emailClient = new SmtpClient();
-                emailClient.Connect(_emailSettings.Host, _emailSettings.Port, _emailSettings.UseSSL);
-                emailClient.Authenticate(_emailSettings.EmailId, _emailSettings.Password);
-                emailClient.Send(emailMessage);
-                emailClient.Disconnect(true);
-                emailClient.Dispose();
-            }
-            catch (Exception ex)
-            {
-                //Log Exception Details
-            }
+                Port = _emailSettings.Port,
+                Credentials = new NetworkCredential(fromMail, fromPassword),
+                EnableSsl = _emailSettings.UseSSL,
+            };
+
+            smtpClient.Send(message);
         }
     }
 }
